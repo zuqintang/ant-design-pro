@@ -1,7 +1,10 @@
-{
+const rulesDirPlugin = require('eslint-plugin-rulesdir');
+rulesDirPlugin.RULES_DIR = 'tests/rules';
+
+module.exports = {
   "parser": "babel-eslint",
   "extends": "airbnb",
-  "plugins": ["compat"],
+  "plugins": ["compat", "rulesdir"],
   "env": {
     "browser": true,
     "node": true,
@@ -54,6 +57,7 @@
     "function-paren-newline": [0],
     "no-restricted-globals": [0],
     "require-yield": [1],
+    "rulesdir/login-typo": 2,
     "compat/compat": "error"
   },
   "parserOptions": {
@@ -64,4 +68,4 @@
   "settings": {
     "polyfills": ["fetch", "promises"]
   }
-}
+};
