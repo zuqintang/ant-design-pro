@@ -10,11 +10,11 @@
 module.exports = {
   meta: {
     docs: {
-      description: 'xx',
-      category: 'Fill me in',
+      description: '修改常见的中文错误',
+      category: 'Typo',
       recommended: false,
     },
-    fixable: null, // or 'code' or 'whitespace'
+    fixable: 'code', // or 'code' or 'whitespace'
     schema: [
       // fill in your schema
     ],
@@ -35,13 +35,14 @@ module.exports = {
 
     return {
       Literal: (node) => {
-        if (typeof node.value === 'string' && node.value === '登陆') {
+        if (typeof node.value === 'string' && node.raw.indexOf('登陆') >= 0) {
           context.report({
             node,
-            message: '使用了 {{ character }}，请使用『登录』代替',
-            data: {
-              character: node.raw,
-            },
+            message: '使用了『登陆』，请使用『登录』代替',
+            fix: fixer => {
+              const start = node.raw.indexOf('登陆');
+              return fixer.replaceTextRange([node.range[0] + start, node.range[0] + start + 2], '登录');
+            }
           });
         }
       },
