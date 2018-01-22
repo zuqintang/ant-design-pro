@@ -91,6 +91,42 @@ export const getRouterData = (app) => {
     '/form/step-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm')),
     },
+    '/form/set-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/SetForm')),
+    },
+    '/form/group-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/GroupForm')),
+    },
+    '/form/element-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ElementForm')),
+    },
+    '/form/value-domain-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ValueDomainForm')),
+    },
+    '/form/permissible-option-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/PermissibleOptionForm')),
+    },
+    '/form/value-meaning-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ValueMeaningForm')),
+    },
+    '/form/concept-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ConceptForm')),
+    },
+    '/form/element-concept-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ElementConceptForm')),
+    },
+    '/form/object-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ObjectForm')),
+    },
+    '/form/property-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/PropertyForm')),
+    },
+    '/form/represent-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/RepresentForm')),
+    },
+    '/form/unit-form': {
+      component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/UnitForm')),
+    },
     '/form/step-form/info': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step1')),
     },

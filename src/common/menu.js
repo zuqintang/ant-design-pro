@@ -29,6 +29,54 @@ const menuData = [{
     name: '高级表单',
     authority: 'admin',
     path: 'advanced-form',
+  }, {
+    name: '数据集表单',
+    authority: 'admin',
+    path: 'set-form',
+  }, {
+    name: '数据组表单',
+    authority: 'admin',
+    path: 'group-form',
+  }, {
+    name: '数据元表单',
+    authority: 'admin',
+    path: 'element-form',
+  }, {
+    name: '值域表单',
+    authority: 'admin',
+    path: 'value-domain-form',
+  }, {
+    name: '值域允许值表单',
+    authority: 'admin',
+    path: 'permissible-option-form',
+  }, {
+    name: '概念域表单',
+    authority: 'admin',
+    path: 'concept-form',
+  }, {
+    name: '值含义表单',
+    authority: 'admin',
+    path: 'value-meaning-form',
+  }, {
+    name: '数据元概念表单',
+    authority: 'admin',
+    path: 'element-concept-form',
+  }, {
+    name: '对象类表单',
+    authority: 'admin',
+    path: 'object-form',
+  }, {
+    name: '特性表单',
+    authority: 'admin',
+    path: 'property-form',
+  }, {
+    name: '表示类表单',
+    authority: 'admin',
+    path: 'represent-form',
+  }, {
+    name: '计量单位表单',
+    authority: 'admin',
+    path: 'unit-form',
   }],
 }, {
   name: '列表页',
