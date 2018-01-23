@@ -104,6 +104,42 @@ const menuData = [{
       name: '搜索列表（应用）',
       path: 'applications',
     }],
+  }, {
+    name: '数据集表格',
+    path: 'set-table-list',
+  }, {
+    name: '数据组表格',
+    path: 'group-table-list',
+  }, {
+    name: '数据元表格',
+    path: 'element-table-list',
+  }, {
+    name: '值域表格',
+    path: 'value-domain-table-list',
+  }, {
+    name: '值域允许值表格',
+    path: 'permissible-option-table-list',
+  }, {
+    name: '概念域表格',
+    path: 'concept-table-list',
+  }, {
+    name: '值含义表格',
+    path: 'value-meaning-table-list',
+  }, {
+    name: '数据元概念表格',
+    path: 'element-concept-table-list',
+  }, {
+    name: '对象类表格',
+    path: 'object-table-list',
+  }, {
+    name: '特性表格',
+    path: 'property-table-list',
+  }, {
+    name: '表示类表格',
+    path: 'represent-table-list',
+  }, {
+    name: '计量单位表格',
+    path: 'unit-table-list',
   }],
 }, {
   name: '详情页',

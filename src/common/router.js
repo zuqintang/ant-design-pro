@@ -142,6 +142,42 @@ export const getRouterData = (app) => {
     '/list/table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/TableList')),
     },
+    '/list/set-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/SetTableList')),
+    },
+    '/list/group-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/GroupTableList')),
+    },
+    '/list/element-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ElementTableList')),
+    },
+    '/list/value-domain-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ValueDomainTableList')),
+    },
+    '/list/permissible-option-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/PermissibleOptionTableList')),
+    },
+    '/list/concept-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ConceptTableList')),
+    },
+    '/list/value-meaning-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ValueMeaningTableList')),
+    },
+    '/list/element-concept-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ElementConceptTableList')),
+    },
+    '/list/object-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ObjectTableList')),
+    },
+    '/list/property-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/PropertyTableList')),
+    },
+    '/list/represent-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/RepresentTableList')),
+    },
+    '/list/unit-table-list': {
+      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/UnitTableList')),
+    },
     '/list/basic-list': {
       component: dynamicWrapper(app, ['list'], () => import('../routes/List/BasicList')),
     },
