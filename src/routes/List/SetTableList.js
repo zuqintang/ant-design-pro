@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, Cascader, DatePicker, Modal, message } from 'antd';
-import StandardTable from '../../components/StandardTable';
+import SetStandardTable from '../../components/SetStandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './TableList.less';
@@ -28,17 +28,6 @@ const options = [{
     }, { value: '86', label: '309' }],
   }],
 }, {
-  value: '案例模版',
-  label: '案例模版',
-  children: [{
-    value: 'nanjing',
-    label: 'Nanjing',
-    children: [{
-      value: 'zhonghuamen',
-      label: 'Zhong Hua Men',
-    }],
-  }],
-}, {
   value: '通用型',
   label: '通用型',
   children: [{
@@ -60,27 +49,18 @@ const options = [{
       label: 'Zhong Hua Men',
     }],
   }],
-}, {
-  value: '其他（回收站）',
-  label: '其他（回收站）',
-  children: [{
-    value: 'nanjing',
-    label: 'Nanjing',
-    children: [{
-      value: 'zhonghuamen',
-      label: 'Zhong Hua Men',
-    }],
-  }],
-},
-];
+}];
 const CreateForm = Form.create()((props) => {
-  const { modalVisible, parent, form } = props;
+  const { modalVisible, addInputValue, parent, form } = props;
   const okHandle = () => {
     form.validateFields((err/* , fieldsValue */) => {
       if (err) return;
       parent.handleAdd();
     });
   };
+  function displayRender(label) {
+    return label[label.length - 1];
+  }
   return (
     <Modal
       title="新建数据集"
@@ -94,11 +74,11 @@ const CreateForm = Form.create()((props) => {
         label="标准依据"
       >
         {form.getFieldDecorator('STANDARD', {
-          rules: [{
+          sets: [{
             required: true, message: '请选择标准',
           }],
         })(
-          <Select placeholder="请选择" style={{ width: '100%' }}>
+          <Select placeholder="请选择" style={{ width: '100%' }} onChange={parent.handleAddStandard} setfieldsvalue={addInputValue.STANDARD}>
             <Option value="1">国标</Option>
             <Option value="2">企标</Option>
           </Select>
@@ -110,11 +90,11 @@ const CreateForm = Form.create()((props) => {
         label="数据集编码"
       >
         {form.getFieldDecorator('CODE', {
-          rules: [{
+          set: [{
             required: false, message: '',
           }],
         })(
-          <Input placeholder="系统生成" disabled />
+          <Input placeholder="系统生成" onChange={parent.handleAddInput} setfieldsvalue={addInputValue.CODE} />
         )}
       </FormItem>
       <FormItem
@@ -123,11 +103,11 @@ const CreateForm = Form.create()((props) => {
         label="所属科别"
       >
         {form.getFieldDecorator('GROUPID', {
-          rules: [{
+          sets: [{
             required: true, message: '请选择科别',
           }],
         })(
-          <Cascader options={options} placeholder="请选择" style={{ width: '100%' }} />
+          <Cascader options={options} placeholder="请选择" style={{ width: '100%' }} onChange={parent.handleAddGroup} setfieldsvalue={addInputValue.GROUPID} expandTrigger="hover" displayRender={displayRender} />
         )}
       </FormItem>
       <FormItem
@@ -136,20 +116,20 @@ const CreateForm = Form.create()((props) => {
         label="数据集名称"
       >
         {form.getFieldDecorator('NAME', {
-          rules: [{
+          sets: [{
             required: true, message: '不能为空',
           }],
         })(
-          <Input placeholder="请输入" />
+          <Input placeholder="请输入" onChange={parent.handleAddInput} setfieldsvalue={addInputValue.NAME} />
         )}
       </FormItem>
     </Modal>
   );
 });
 
-@connect(({ rule, loading }) => ({
-  rule,
-  loading: loading.models.rule,
+@connect(({ set, loading }) => ({
+  set,
+  loading: loading.models.set,
 }))
 @Form.create()
 export default class GroupTableList extends PureComponent {
@@ -164,7 +144,7 @@ export default class GroupTableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'rule/fetch',
+      type: 'set/fetch',
     });
   }
 
@@ -189,7 +169,7 @@ export default class GroupTableList extends PureComponent {
     }
 
     dispatch({
-      type: 'rule/fetch',
+      type: 'set/fetch',
       payload: params,
     });
   }
@@ -201,7 +181,7 @@ export default class GroupTableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'rule/fetch',
+      type: 'set/fetch',
       payload: {},
     });
   }
@@ -221,7 +201,7 @@ export default class GroupTableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'rule/remove',
+          type: 'set/remove',
           payload: {
             no: selectedRows.map(row => row.no).join(','),
           },
@@ -261,7 +241,7 @@ export default class GroupTableList extends PureComponent {
       });
 
       dispatch({
-        type: 'rule/fetch',
+        type: 'set/fetch',
         payload: values,
       });
     });
@@ -275,16 +255,26 @@ export default class GroupTableList extends PureComponent {
 
   handleAddInput = (e) => {
     this.setState({
-      addInputValue: e.target.value,
+      addInputValue: { ...this.state.addInputValue, [e.target.name]: e.target.value },
+    });
+  }
+
+  handleAddGroup = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, GROUPID: value[value.length - 1] },
+    });
+  }
+
+  handleAddStandard = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, STANDARD: value },
     });
   }
 
   handleAdd = () => {
     this.props.dispatch({
-      type: 'rule/add',
-      payload: {
-        description: this.state.addInputValue,
-      },
+      type: 'set/add',
+      payload: this.state.addInputValue,
     });
 
     message.success('添加成功');
@@ -397,7 +387,7 @@ export default class GroupTableList extends PureComponent {
   }
 
   render() {
-    const { rule: { data }, loading } = this.props;
+    const { set: { data }, loading } = this.props;
     const { selectedRows, modalVisible, addInputValue } = this.state;
 
     const menu = (
@@ -411,6 +401,8 @@ export default class GroupTableList extends PureComponent {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
       handleAddInput: this.handleAddInput,
+      handleAddGroup: this.handleAddGroup,
+      handleAddStandard: this.handleAddStandard,
     };
 
     return (
@@ -437,7 +429,7 @@ export default class GroupTableList extends PureComponent {
                 )
               }
             </div>
-            <StandardTable
+            <SetStandardTable
               selectedRows={selectedRows}
               loading={loading}
               data={data}

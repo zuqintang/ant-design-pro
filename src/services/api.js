@@ -32,6 +32,29 @@ export async function addRule(params) {
     },
   });
 }
+export async function querySet(params) {
+  return request(`/api/set?${stringify(params)}`);
+}
+
+export async function removeSet(params) {
+  return request('/api/set', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'delete',
+    },
+  });
+}
+
+export async function addSet(params) {
+  return request('/api/set', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
 
 export async function fakeSubmitForm(params) {
   return request('/api/forms', {

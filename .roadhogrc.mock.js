@@ -1,5 +1,6 @@
 import mockjs from 'mockjs';
 import { getRule, postRule } from './mock/rule';
+import {getSet,postSet} from "./mock/set"
 import { getActivities, getNotice, getFakeList } from './mock/api';
 import { getFakeChartData } from './mock/chart';
 import { imgMap } from './mock/utils';
@@ -49,6 +50,7 @@ const proxy = {
   'GET /api/project/notice': getNotice,
   'GET /api/activities': getActivities,
   'GET /api/rule': getRule,
+  'GET /api/set': getSet,
   'POST /api/rule': {
     $params: {
       pageSize: {
@@ -57,6 +59,15 @@ const proxy = {
       },
     },
     $body: postRule,
+  },
+  'POST /api/set': {
+    $params: {
+      pageSize: {
+        desc: '分页',
+        exp: 2,
+      },
+    },
+    $body: postSet,
   },
   'POST /api/forms': (req, res) => {
     res.send({ message: 'Ok' });
