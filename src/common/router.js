@@ -149,7 +149,7 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/GroupTableList')),
     },
     '/list/element-table-list': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ElementTableList')),
+      component: dynamicWrapper(app, ['element'], () => import('../routes/List/ElementTableList')),
     },
     '/list/value-domain-table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ValueDomainTableList')),
@@ -161,7 +161,7 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ConceptTableList')),
     },
     '/list/value-meaning-table-list': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ValueMeaningTableList')),
+      component: dynamicWrapper(app, ['value'], () => import('../routes/List/ValueMeaningTableList')),
     },
     '/list/element-concept-table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ElementConceptTableList')),
@@ -201,6 +201,12 @@ export const getRouterData = (app) => {
     },
     '/profile/advanced': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/Profile/AdvancedProfile')),
+    },
+    '/profile/element-advanced': {
+      component: dynamicWrapper(app, ['profile'], () => import('../routes/Profile/ElementAdvancedProfile')),
+    },
+    '/profile/value-advanced': {
+      component: dynamicWrapper(app, ['profile'], () => import('../routes/Profile/ValueAdvancedProfile')),
     },
     '/result/success': {
       component: dynamicWrapper(app, [], () => import('../routes/Result/Success')),

@@ -152,6 +152,14 @@ const menuData = [{
     name: '高级详情页',
     path: 'advanced',
     authority: 'admin',
+  }, {
+    name: '数据元详情页',
+    path: 'element-advanced',
+    authority: 'admin',
+  }, {
+    name: '值含义详情页',
+    path: 'value-advanced',
+    authority: 'admin',
   }],
 }, {
   name: '结果页',

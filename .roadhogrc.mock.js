@@ -1,6 +1,8 @@
 import mockjs from 'mockjs';
 import { getRule, postRule } from './mock/rule';
 import {getSet,postSet} from "./mock/set"
+import {getElement,postElement} from "./mock/element"
+import {getValue,postValue} from "./mock/value"
 import { getActivities, getNotice, getFakeList } from './mock/api';
 import { getFakeChartData } from './mock/chart';
 import { imgMap } from './mock/utils';
@@ -24,7 +26,7 @@ const proxy = {
       },
     },
     $body: {
-      name: 'Serati Ma',
+      name: '测试用户',
       avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
       userid: '00000001',
       notifyCount: 12,
@@ -51,6 +53,8 @@ const proxy = {
   'GET /api/activities': getActivities,
   'GET /api/rule': getRule,
   'GET /api/set': getSet,
+  'GET /api/element': getElement,
+  'GET /api/value': getValue,
   'POST /api/rule': {
     $params: {
       pageSize: {
@@ -68,6 +72,24 @@ const proxy = {
       },
     },
     $body: postSet,
+  },
+  'POST /api/element': {
+    $params: {
+      pageSize: {
+        desc: '分页',
+        exp: 2,
+      },
+    },
+    $body: postElement,
+  },
+  'POST /api/value': {
+    $params: {
+      pageSize: {
+        desc: '分页',
+        exp: 2,
+      },
+    },
+    $body: postValue,
   },
   'POST /api/forms': (req, res) => {
     res.send({ message: 'Ok' });

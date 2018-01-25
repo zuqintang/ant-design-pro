@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
-import StandardTable from '../../components/StandardTable';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Radio } from 'antd';
+import ElementStandardTable from '../../components/ElementStandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './TableList.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;
+const { TextArea } = Input;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 
 const CreateForm = Form.create()((props) => {
@@ -18,36 +19,250 @@ const CreateForm = Form.create()((props) => {
       parent.handleAdd();
     });
   };
+  const formItemLayout = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 7 },
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 12 },
+      md: { span: 10 },
+    },
+  };
+  const { getFieldDecorator } = form;
   return (
     <Modal
-      title="新建规则"
+      title="新建数据元"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => parent.handleModalVisible()}
     >
       <FormItem
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 15 }}
-        label="描述"
+        {...formItemLayout}
+        label="标准"
       >
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: 'Please input some description...' }],
+        {getFieldDecorator('STANDARD', {
+          rules: [{
+            required: true, message: '不能为空',
+          }],
         })(
-          <Input placeholder="请输入" onChange={parent.handleAddInput} value={addInputValue} />
+          <Select
+            placeholder="请选择"
+            style={{ width: '100%' }}
+            onChange={parent.handleAddStandard}
+            setfiledsvalue={addInputValue.STANDARD}
+          >
+            <Option value="1">国标</Option>
+            <Option value="2">企标</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="对象类"
+      >
+        {getFieldDecorator('DATA_OBJECT_ID', {
+          rules: [{
+            required: true, message: '不能为空',
+          }],
+        })(
+          <Select
+            placeholder="请选择"
+            style={{ width: '100%' }}
+            onChange={parent.handleAddObject}
+            setfiledsvalue={addInputValue.DATA_OBJECT_ID}
+          >
+            <Option value="1">1</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="特性"
+      >
+        {getFieldDecorator('DATA_FEATURE_ID', {
+          rules: [{
+            required: true, message: '不能为空',
+          }],
+        })(
+          <Select
+            placeholder="请选择"
+            style={{ width: '100%' }}
+            onChange={parent.handleAddFeature}
+            setfiledsvalue={addInputValue.DATA_FEATURE_ID}
+          >
+            <Option value="1">1</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="表示"
+      >
+        {getFieldDecorator('DATA_DISPLAY_ID', {
+          rules: [{
+            required: true, message: '不能为空',
+          }],
+        })(
+          <Select
+            placeholder="请选择"
+            style={{ width: '100%' }}
+            onChange={parent.handleAddDisplay}
+            setfiledsvalue={addInputValue.DATA_DISPLAY_ID}
+          >
+            <Option value="1">1</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="类别"
+      >
+        {getFieldDecorator('GROUPID', {
+          rules: [{
+            required: true, message: '不能为空',
+          }],
+        })(
+          <Select
+            placeholder="请选择"
+            style={{ width: '100%' }}
+            onChange={parent.handleAddGroup}
+            setfiledsvalue={addInputValue.GROUPID}
+          >
+            <Option value="1">国标</Option>
+            <Option value="2">企标</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="定义描述"
+      >
+        {getFieldDecorator('METADATA_INTRO', {
+          rules: [{
+            required: true, message: '请输入',
+          }],
+        })(
+          <TextArea
+            style={{ minHeight: 32 }}
+            placeholder="请输入"
+            rows={4}
+            onChange={parent.handleAddIntro}
+            setfiledsvalue={addInputValue.METADATA_INTRO}
+          />
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="数据类型"
+      >
+        {getFieldDecorator('DATA_META_DATATYPE', {
+          rules: [{
+            required: true, message: '不能为空',
+          }],
+        })(
+          <Select
+            placeholder="请选择"
+            style={{ width: '100%' }}
+            onChange={parent.handleAdddDatatype}
+            setfiledsvalue={addInputValue.DATA_META_DATATYPE}
+          >
+            <Option value="1">NE</Option>
+            <Option value="2">S</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="表示格式"
+      >
+        {getFieldDecorator('DATA_META_DISPLAY', {
+          rules: [{
+            required: true, message: '不能为空',
+          }],
+        })(
+          <Select
+            placeholder="请选择"
+            style={{ width: '100%' }}
+            onChange={parent.handleAddDataDisplay}
+            setfiledsvalue={addInputValue.DATA_META_DISPLAY}
+          >
+            <Option value="1">AN..50</Option>
+            <Option value="2">AN2000</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="别名（可选）"
+      >
+        {getFieldDecorator('OTHER_NAME')(
+          <Input
+            placeholder="请输入"
+            onChange={parent.handleAddInput}
+            setfiledsvalue={addInputValue.OTHER_NAME}
+          />
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="英文名（可选）"
+      >
+        {getFieldDecorator('METADATA_EN_NAME')(
+          <Input
+            placeholder="请输入"
+            onChange={parent.handleAddInput}
+            setfiledsvalue={addInputValue.METADATA_EN_NAME}
+          />
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="英文定义描述（可选）"
+      >
+        {getFieldDecorator('METADATA_EN_INTRO')(
+          <TextArea
+            style={{ minHeight: 32 }}
+            placeholder="请输入"
+            rows={4}
+            onChange={parent.handleAddEnIntro}
+            setfiledsvalue={addInputValue.METADATA_EN_INTRO}
+          />
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="是否启用"
+      >
+        {getFieldDecorator('DEL_FLAG')(
+          <Radio.Group
+            onChange={parent.handleAddDelFlag}
+            setfiledsvalue={addInputValue.DEL_FLAG}
+          >
+            <Radio value="0">不启用</Radio>
+            <Radio value="1">启用</Radio>
+          </Radio.Group>
         )}
       </FormItem>
     </Modal>
   );
 });
 
-@connect(({ rule, loading }) => ({
-  rule,
-  loading: loading.models.rule,
+@connect(({ element, loading }) => ({
+  element,
+  loading: loading.models.element,
 }))
 @Form.create()
 export default class ElementTableList extends PureComponent {
   state = {
-    addInputValue: '',
+    addInputValue: {},
     modalVisible: false,
     expandForm: false,
     selectedRows: [],
@@ -57,7 +272,7 @@ export default class ElementTableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'rule/fetch',
+      type: 'element/fetch',
     });
   }
 
@@ -82,7 +297,7 @@ export default class ElementTableList extends PureComponent {
     }
 
     dispatch({
-      type: 'rule/fetch',
+      type: 'element/fetch',
       payload: params,
     });
   }
@@ -94,7 +309,7 @@ export default class ElementTableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'rule/fetch',
+      type: 'element/fetch',
       payload: {},
     });
   }
@@ -114,7 +329,7 @@ export default class ElementTableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'rule/remove',
+          type: 'element/remove',
           payload: {
             no: selectedRows.map(row => row.no).join(','),
           },
@@ -154,7 +369,7 @@ export default class ElementTableList extends PureComponent {
       });
 
       dispatch({
-        type: 'rule/fetch',
+        type: 'element/fetch',
         payload: values,
       });
     });
@@ -168,16 +383,64 @@ export default class ElementTableList extends PureComponent {
 
   handleAddInput = (e) => {
     this.setState({
-      addInputValue: e.target.value,
+      addInputValue: { ...this.state.addInputValue, [e.target.id]: e.target.value },
+    });
+  }
+  handleAddIntro = (e) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, METADATA_INTRO: e.target.value },
+    });
+  }
+  handleAddEnIntro = (e) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, METADATA_EN_INTRO: e.target.value },
+    });
+  }
+  handleAddStandard = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, STANDARD: value },
+    });
+  }
+  handleAddObject = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, DATA_OBJECT_ID: value },
+    });
+  }
+  handleAddFeature = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, DATA_FEATURE_ID: value },
+    });
+  }
+  handleAddDisplay = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, DATA_DISPLAY_ID: value },
+    });
+  }
+  handleAddGroup = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, GROUPID: value },
+    });
+  }
+  handleAdddDatatype = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, DATA_META_DATATYPE: value },
+    });
+  }
+  handleAddDataDisplay = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, DATA_META_DISPLAY: value },
+    });
+  }
+  handleAddDelFlag = (e) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, DEL_FLAG: e.target.value },
     });
   }
 
   handleAdd = () => {
     this.props.dispatch({
-      type: 'rule/add',
-      payload: {
-        description: this.state.addInputValue,
-      },
+      type: 'element/add',
+      payload: this.state.addInputValue,
     });
 
     message.success('添加成功');
@@ -299,13 +562,14 @@ export default class ElementTableList extends PureComponent {
   }
 
   render() {
-    const { rule: { data }, loading } = this.props;
+    const { element: { data }, loading } = this.props;
     const { selectedRows, modalVisible, addInputValue } = this.state;
 
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
         <Menu.Item key="approval">批量审批</Menu.Item>
+        <Menu.Item key="concept">指定数据元概念</Menu.Item>
       </Menu>
     );
 
@@ -313,6 +577,16 @@ export default class ElementTableList extends PureComponent {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
       handleAddInput: this.handleAddInput,
+      handleAddStandard: this.handleAddStandard,
+      handleAddObject: this.handleAddObject,
+      handleAddFeature: this.handleAddFeature,
+      handleAddDisplay: this.handleAddDisplay,
+      handleAddGroup: this.handleAddGroup,
+      handleAdddDatatype: this.handleAdddDatatype,
+      handleAddDataDisplay: this.handleAddDataDisplay,
+      handleAddDelFlag: this.handleAddDelFlag,
+      handleAddEnIntro: this.handleAddEnIntro,
+      handleAddIntro: this.handleAddIntro,
     };
 
     return (
@@ -324,12 +598,12 @@ export default class ElementTableList extends PureComponent {
             </div>
             <div className={styles.tableListOperator}>
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
+                新建数据元
               </Button>
               {
                 selectedRows.length > 0 && (
                   <span>
-                    <Button>批量操作</Button>
+                    <Button>添加值</Button>
                     <Dropdown overlay={menu}>
                       <Button>
                         更多操作 <Icon type="down" />
@@ -339,7 +613,7 @@ export default class ElementTableList extends PureComponent {
                 )
               }
             </div>
-            <StandardTable
+            <ElementStandardTable
               selectedRows={selectedRows}
               loading={loading}
               data={data}

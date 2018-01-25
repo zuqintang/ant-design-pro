@@ -56,6 +56,54 @@ export async function addSet(params) {
   });
 }
 
+export async function queryElement(params) {
+  return request(`/api/element?${stringify(params)}`);
+}
+
+export async function removeElement(params) {
+  return request('/api/element', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'delete',
+    },
+  });
+}
+
+export async function addElement(params) {
+  return request('/api/element', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
+
+export async function queryValue(params) {
+  return request(`/api/value?${stringify(params)}`);
+}
+
+export async function removeValue(params) {
+  return request('/api/value', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'delete',
+    },
+  });
+}
+
+export async function addValue(params) {
+  return request('/api/value', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
+
 export async function fakeSubmitForm(params) {
   return request('/api/forms', {
     method: 'POST',
