@@ -33,7 +33,7 @@ const CreateForm = Form.create()((props) => {
         {form.getFieldDecorator('desc', {
           rules: [{ required: true, message: 'Please input some description...' }],
         })(
-          <Input placeholder="请输入" onChange={parent.handleAddInput} value={addInputValue} />
+          <Input placeholder="请输入" onChange={parent.handleAddInput} setfieldsvalue={addInputValue} />
         )}
       </FormItem>
     </Modal>

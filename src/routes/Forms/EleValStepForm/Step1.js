@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
-import StandardTable from '../../components/StandardTable';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, DatePicker, Modal, message } from 'antd';
+import { routerRedux } from 'dva/router';
+import ValueStandardTable from '../../../components/ValueStandardTable';
+// import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './TableList.less';
 
@@ -20,7 +21,7 @@ const CreateForm = Form.create()((props) => {
   };
   return (
     <Modal
-      title="新建规则"
+      title="新建值含义"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => parent.handleModalVisible()}
@@ -31,7 +32,7 @@ const CreateForm = Form.create()((props) => {
         label="描述"
       >
         {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: 'Please input some description...' }],
+          values: [{ required: true, message: 'Please input some description...' }],
         })(
           <Input placeholder="请输入" onChange={parent.handleAddInput} setfieldsvalue={addInputValue} />
         )}
@@ -40,12 +41,12 @@ const CreateForm = Form.create()((props) => {
   );
 });
 
-@connect(({ rule, loading }) => ({
-  rule,
-  loading: loading.models.rule,
+@connect(({ value, loading }) => ({
+  value,
+  loading: loading.models.value,
 }))
 @Form.create()
-export default class ConceptTableList extends PureComponent {
+export default class ValueMeaningTableList extends PureComponent {
   state = {
     addInputValue: '',
     modalVisible: false,
@@ -57,7 +58,7 @@ export default class ConceptTableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'rule/fetch',
+      type: 'value/fetch',
     });
   }
 
@@ -82,7 +83,7 @@ export default class ConceptTableList extends PureComponent {
     }
 
     dispatch({
-      type: 'rule/fetch',
+      type: 'value/fetch',
       payload: params,
     });
   }
@@ -94,7 +95,7 @@ export default class ConceptTableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'rule/fetch',
+      type: 'value/fetch',
       payload: {},
     });
   }
@@ -114,7 +115,7 @@ export default class ConceptTableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'rule/remove',
+          type: 'value/remove',
           payload: {
             no: selectedRows.map(row => row.no).join(','),
           },
@@ -154,7 +155,7 @@ export default class ConceptTableList extends PureComponent {
       });
 
       dispatch({
-        type: 'rule/fetch',
+        type: 'value/fetch',
         payload: values,
       });
     });
@@ -174,7 +175,7 @@ export default class ConceptTableList extends PureComponent {
 
   handleAdd = () => {
     this.props.dispatch({
-      type: 'rule/add',
+      type: 'value/add',
       payload: {
         description: this.state.addInputValue,
       },
@@ -192,19 +193,16 @@ export default class ConceptTableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="规则编号">
-              {getFieldDecorator('no')(
+            <FormItem label="标识符">
+              {getFieldDecorator('FIELDCODE_TABLECODE')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
+            <FormItem label="值含义">
+              {getFieldDecorator('FIELDCODE_VALUE_CN_NAME')(
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
@@ -228,26 +226,23 @@ export default class ConceptTableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="规则编号">
-              {getFieldDecorator('no')(
+            <FormItem label="标志符">
+              {getFieldDecorator('FIELDCODE_TABLECODE')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
+            <FormItem label="值含义">
+              {getFieldDecorator('FIELDCODE_VALUE_CN_NAME')(
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="调用次数">
-              {getFieldDecorator('number')(
-                <InputNumber style={{ width: '100%' }} />
+            <FormItem label="数据元编号">
+              {getFieldDecorator('METADATA_IDENTIFY')(
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
@@ -255,27 +250,27 @@ export default class ConceptTableList extends PureComponent {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
             <FormItem label="更新日期">
-              {getFieldDecorator('date')(
+              {getFieldDecorator('UPDATE_DATE')(
                 <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status3')(
+            <FormItem label="更新人">
+              {getFieldDecorator('UPDATE_MAN')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
+                  <Option value="0">张三</Option>
+                  <Option value="1">李四</Option>
                 </Select>
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="使用状态">
-              {getFieldDecorator('status4')(
+              {getFieldDecorator('DEL_FLAG')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
+                  <Option value="0">未启用</Option>
+                  <Option value="1">启用</Option>
                 </Select>
               )}
             </FormItem>
@@ -299,15 +294,20 @@ export default class ConceptTableList extends PureComponent {
   }
 
   render() {
-    const { rule: { data }, loading } = this.props;
+    const { value: { data }, loading, dispatch } = this.props;
     const { selectedRows, modalVisible, addInputValue } = this.state;
 
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
-      </Menu>
-    );
+    const onValidateForm = () => {
+      // validateFields((err, values) => {
+      //   if (!err) {
+      //     dispatch({
+      //       type: 'form/saveStepFormData',
+      //       payload: values,
+      //     });
+      dispatch(routerRedux.push('/form/ele-val-step-form/element'));
+      //   }
+      // });
+    };
 
     const parentMethods = {
       handleAdd: this.handleAdd,
@@ -316,7 +316,7 @@ export default class ConceptTableList extends PureComponent {
     };
 
     return (
-      <PageHeaderLayout title="查询表格">
+      <div>
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>
@@ -324,22 +324,22 @@ export default class ConceptTableList extends PureComponent {
             </div>
             <div className={styles.tableListOperator}>
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
+                新建值含义
               </Button>
               {
                 selectedRows.length > 0 && (
                   <span>
-                    <Button>批量操作</Button>
-                    <Dropdown overlay={menu}>
+                    <Button onClick={onValidateForm}>下一步</Button>
+                    {/* <Dropdown overlay={menu}>
                       <Button>
                         更多操作 <Icon type="down" />
                       </Button>
-                    </Dropdown>
+                    </Dropdown> */}
                   </span>
                 )
               }
             </div>
-            <StandardTable
+            <ValueStandardTable
               selectedRows={selectedRows}
               loading={loading}
               data={data}
@@ -353,7 +353,7 @@ export default class ConceptTableList extends PureComponent {
           modalVisible={modalVisible}
           addInputValue={addInputValue}
         />
-      </PageHeaderLayout>
+      </div>
     );
   }
 }

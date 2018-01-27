@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Debounce from 'lodash-decorators/debounce';
 import Bind from 'lodash-decorators/bind';
 import { connect } from 'dva';
-import { Button, Menu, Dropdown, Icon, Row, Col, Card, Badge, Table, Divider } from 'antd';
+import { Button, Menu, Dropdown, Icon, Row, Col, Card, Badge, Table, Divider, Tag } from 'antd';
 // import classNames from 'classnames';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import DescriptionList from '../../components/DescriptionList';
@@ -49,7 +49,16 @@ const extra = (
 );
 
 const description = (
-  <DescriptionList className={styles.headerList} size="small" col="2">
+  <DescriptionList className={styles.headerList} size="small" col="2" style={{ position: 'relative', top: '-20px' }}>
+    <div style={{ paddingBottom: '12px' }}>
+      <Tag color="magenta" style={{ marginRight: '0px' }}>国标</Tag>
+      <Tag color="red" style={{ marginRight: '0px' }}>北医三院</Tag>
+      <Tag color="volcano" style={{ marginRight: '0px' }}>心血管</Tag>
+      <Tag color="orange" style={{ marginRight: '0px' }}>民族</Tag>
+      <Tag color="gold" style={{ marginRight: '0px' }}>未审核</Tag>
+      <Tag color="lime" style={{ marginRight: '0px' }}>有值域</Tag>
+      <Tag color="green" style={{ marginRight: '0px' }}>已被使用</Tag>
+    </div>
     <Description term="创建人">张三</Description>
     <Description term="所属数据集">DS12.12.121</Description>
     <Description term="创建时间">2017-07-07</Description>

@@ -22,13 +22,18 @@ const menuData = [{
   children: [{
     name: '基础表单',
     path: 'basic-form',
+    hideInMenu: true,
   }, {
     name: '分步表单',
     path: 'step-form',
   }, {
+    name: '查值赋元',
+    path: 'ele-val-step-form',
+  }, {
     name: '高级表单',
     authority: 'admin',
     path: 'advanced-form',
+    hideInMenu: true,
   }, {
     name: '数据集表单',
     authority: 'admin',
@@ -85,12 +90,15 @@ const menuData = [{
   children: [{
     name: '查询表格',
     path: 'table-list',
+    hideInMenu: true,
   }, {
     name: '标准列表',
     path: 'basic-list',
+    hideInMenu: true,
   }, {
     name: '卡片列表',
     path: 'card-list',
+    hideInMenu: true,
   }, {
     name: '搜索列表',
     path: 'search',
@@ -104,6 +112,7 @@ const menuData = [{
       name: '搜索列表（应用）',
       path: 'applications',
     }],
+    hideInMenu: true,
   }, {
     name: '数据集表格',
     path: 'set-table-list',
@@ -148,10 +157,12 @@ const menuData = [{
   children: [{
     name: '基础详情页',
     path: 'basic',
+    hideInMenu: true,
   }, {
     name: '高级详情页',
     path: 'advanced',
     authority: 'admin',
+    hideInMenu: true,
   }, {
     name: '数据元详情页',
     path: 'element-advanced',

@@ -139,7 +139,7 @@ export default class SearchList extends Component {
                       >
                         {
                           owners.map(owner =>
-                            <Option key={owner.id} value={owner.id}>{owner.name}</Option>
+                            <Option key={owner.id} setfieldsvalue={owner.id}>{owner.name}</Option>
                           )
                         }
                       </Select>
