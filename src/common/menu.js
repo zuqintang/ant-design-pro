@@ -1,7 +1,7 @@
 import { isUrl } from '../utils/utils';
 
 const menuData = [{
-  name: 'dashboard',
+  name: '首页',
   icon: 'dashboard',
   path: 'dashboard',
   children: [{
@@ -26,61 +26,67 @@ const menuData = [{
   }, {
     name: '分步表单',
     path: 'step-form',
+    hideInMenu: true,
   }, {
     name: '查值赋元',
     path: 'ele2val-step-form',
   }, {
+    name: '集分组',
+    path: 'set2set-step-form',
+  }, {
+    name: '集/组生元',
+    path: 'set2ele-step-form',
+  }, {
     name: '高级表单',
-    authority: 'admin',
     path: 'advanced-form',
     hideInMenu: true,
   }, {
     name: '数据集表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'set-form',
   }, {
     name: '数据组表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'group-form',
   }, {
     name: '数据元表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'element-form',
   }, {
     name: '值域表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'value-domain-form',
   }, {
     name: '值域允许值表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'permissible-option-form',
   }, {
     name: '概念域表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'concept-form',
   }, {
     name: '值含义表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'value-meaning-form',
   }, {
     name: '数据元概念表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'element-concept-form',
   }, {
     name: '对象类表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'object-form',
   }, {
     name: '特性表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'property-form',
   }, {
     name: '表示类表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'represent-form',
   }, {
     name: '计量单位表单',
-    authority: 'admin',
+    // authority: 'admin',
     path: 'unit-form',
   }],
 }, {
@@ -119,36 +125,45 @@ const menuData = [{
   }, {
     name: '数据组表格',
     path: 'group-table-list',
+    authority: 'admin',
   }, {
     name: '数据元表格',
     path: 'element-table-list',
   }, {
     name: '值域表格',
     path: 'value-domain-table-list',
+    authority: 'admin',
   }, {
     name: '值域允许值表格',
     path: 'permissible-option-table-list',
+    authority: 'admin',
   }, {
     name: '概念域表格',
     path: 'concept-table-list',
+    authority: 'admin',
   }, {
     name: '值含义表格',
     path: 'value-meaning-table-list',
   }, {
     name: '数据元概念表格',
     path: 'element-concept-table-list',
+    authority: 'admin',
   }, {
     name: '对象类表格',
     path: 'object-table-list',
+    authority: 'admin',
   }, {
     name: '特性表格',
     path: 'property-table-list',
+    authority: 'admin',
   }, {
     name: '表示类表格',
     path: 'represent-table-list',
+    authority: 'admin',
   }, {
     name: '计量单位表格',
     path: 'unit-table-list',
+    authority: 'admin',
   }],
 }, {
   name: '详情页',
@@ -166,7 +181,6 @@ const menuData = [{
   }, {
     name: '数据元详情页',
     path: 'element-advanced',
-    authority: 'admin',
   }, {
     name: '值含义详情页',
     path: 'value-advanced',
@@ -176,6 +190,7 @@ const menuData = [{
   name: '结果页',
   icon: 'check-circle-o',
   path: 'result',
+  hideInMenu: true,
   children: [{
     name: '成功',
     path: 'success',
@@ -187,6 +202,7 @@ const menuData = [{
   name: '异常页',
   icon: 'warning',
   path: 'exception',
+  hideInMenu: true,
   children: [{
     name: '403',
     path: '403',
@@ -220,6 +236,7 @@ const menuData = [{
   name: '使用文档',
   icon: 'book',
   path: 'http://pro.ant.design/docs/getting-started',
+  hideInMenu: true,
   target: '_blank',
 }];
 

@@ -94,6 +94,12 @@ export const getRouterData = (app) => {
     '/form/ele2val-step-form': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm')),
     },
+    '/form/set2set-step-form': {
+      component: dynamicWrapper(app, ['set2set'], () => import('../routes/Forms/Set2SetStepForm')),
+    },
+    '/form/set2ele-step-form': {
+      component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm')),
+    },
     '/form/set-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/SetForm')),
     },
@@ -150,6 +156,30 @@ export const getRouterData = (app) => {
     },
     '/form/ele2val-step-form/result': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm/Step4')),
+    },
+    '/form/set2set-step-form/value': {
+      component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/Set2SetStepForm/Step1')),
+    },
+    '/form/set2set-step-form/element': {
+      component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/Set2SetStepForm/Step2')),
+    },
+    '/form/set2set-step-form/confirm': {
+      component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/Set2SetStepForm/Step3')),
+    },
+    '/form/set2set-step-form/result': {
+      component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/Set2SetStepForm/Step4')),
+    },
+    '/form/set2ele-step-form/value': {
+      component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm/Step1')),
+    },
+    '/form/set2ele-step-form/element': {
+      component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm/Step2')),
+    },
+    '/form/set2ele-step-form/confirm': {
+      component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm/Step3')),
+    },
+    '/form/set2ele-step-form/result': {
+      component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm/Step4')),
     },
     '/form/advanced-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),

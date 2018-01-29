@@ -135,7 +135,7 @@ const valueColumns = [{
   dataIndex: 'status',
   key: 'status',
   render: text => (
-    text === 'agree' ? <Badge status="success" text="成功" /> : <Badge status="error" text="驳回" />
+    text === 'agree' ? <Badge status="success" text={text} /> : <Badge status="error" text={text} />
   ),
 }, {
   title: '定义描述',
@@ -159,7 +159,7 @@ const templateColumns = [{
   dataIndex: 'status',
   key: 'status',
   render: text => (
-    text === 'agree' ? <Badge status="success" text="成功" /> : <Badge status="error" text="驳回" />
+    text === 'agree' ? <Badge status="success" text={text} /> : <Badge status="error" text={text} />
   ),
 }, {
   title: '元素名称',
@@ -183,7 +183,7 @@ const conceptColumns = [{
   dataIndex: 'status',
   key: 'status',
   render: text => (
-    text === 'agree' ? <Badge status="success" text="成功" /> : <Badge status="error" text="驳回" />
+    text === 'agree' ? <Badge status="success" text={text} /> : <Badge status="error" text={text} />
   ),
 }, {
   title: '操作时间',
