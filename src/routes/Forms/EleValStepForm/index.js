@@ -44,7 +44,7 @@ export default class EleValStepForm extends PureComponent {
                   />
                 ))
               }
-              <Redirect exact from="/form/ele-val-step-form" to="/form/ele-val-step-form/value" />
+              <Redirect exact from="/form/ele2val-step-form" to="/form/ele2val-step-form/value" />
               <Route render={NotFound} />
             </Switch>
           </div>

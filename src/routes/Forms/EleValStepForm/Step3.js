@@ -1,17 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
-import moment from 'moment';
-import { List,
-  // Card, Row, Col, Radio, Input,
-  Alert,
-  Progress,
-  Button, Form,
-  Icon,
-  Dropdown,
-  Menu,
-  Avatar } from 'antd';
+import { List, Alert, Button, Form } from 'antd';
 import { routerRedux } from 'dva/router';
-// import { digitUppercase } from '../../../utils/utils';
 import styles from './style.less';
 
 const formItemLayout = {
@@ -24,19 +14,19 @@ const formItemLayout = {
 };
 
 @Form.create()
-class Step2 extends React.PureComponent {
+class Step3 extends React.PureComponent {
   render() {
-    const { form, data, dispatch, submitting, loading } = this.props;
+    const { form, data, dispatch, submitting } = this.props;
     const { validateFields } = form;
     const onPrev = () => {
-      dispatch(routerRedux.push('/form/ele-val-step-form'));
+      dispatch(routerRedux.push('/form/ele2val-step-form'));
     };
     const onValidateForm = (e) => {
       e.preventDefault();
       validateFields((err, values) => {
         if (!err) {
           dispatch({
-            type: 'form/submitStepForm',
+            type: 'ele2val/submitStepForm',
             payload: {
               ...data,
               ...values,
@@ -45,71 +35,6 @@ class Step2 extends React.PureComponent {
         }
       });
     };
-
-    // const Info = ({ title, value, bordered }) => (
-    //   <div className={styles.headerInfo}>
-    //     <span>{title}</span>
-    //     <p>{value}</p>
-    //     {bordered && <em />}
-    //   </div>
-    // );
-
-    // const extraContent = (
-    //   <div className={styles.extraContent}>
-    //     <RadioGroup defaultValue="all">
-    //       <RadioButton value="all">全部</RadioButton>
-    //       <RadioButton value="progress">进行中</RadioButton>
-    //       <RadioButton value="waiting">等待中</RadioButton>
-    //     </RadioGroup>
-    //     <Search
-    //       className={styles.extraContentSearch}
-    //       placeholder="请输入"
-    //       onSearch={() => ({})}
-    //     />
-    //   </div>
-    // );
-
-    const paginationProps = {
-      showSizeChanger: true,
-      showQuickJumper: true,
-      pageSize: 5,
-      total: 50,
-    };
-
-    const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
-      <div className={styles.listContent}>
-        <div className={styles.listContentItem}>
-          <span>Owner</span>
-          <p>{owner}</p>
-        </div>
-        <div className={styles.listContentItem}>
-          <span>开始时间</span>
-          <p>{moment(createdAt).format('YYYY-MM-DD hh:mm')}</p>
-        </div>
-        <div className={styles.listContentItem}>
-          <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 180 }} />
-        </div>
-      </div>
-    );
-
-    const menu = (
-      <Menu>
-        <Menu.Item>
-          <a>编辑</a>
-        </Menu.Item>
-        <Menu.Item>
-          <a>删除</a>
-        </Menu.Item>
-      </Menu>
-    );
-
-    const MoreBtn = () => (
-      <Dropdown overlay={menu}>
-        <a>
-          更多 <Icon type="down" />
-        </a>
-      </Dropdown>
-    );
     return (
       <Form layout="horizontal" className={styles.stepForm}>
         <Alert
@@ -119,23 +44,16 @@ class Step2 extends React.PureComponent {
           style={{ marginBottom: 24 }}
         />
         <List
-          size="large"
-          rowKey="id"
-          loading={loading}
-          pagination={paginationProps}
-          dataSource={data}
-          renderItem={item => (
-            <List.Item
-              actions={[<a>编辑</a>, <MoreBtn />]}
-            >
+          size="small"
+          header={data.element.METADATA_NAME}
+          footer={data.values.length}
+          dataSource={data.values}
+          renderItem={item =>
+            (
               <List.Item.Meta
-                avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                title={<a href={item.href}>{item.title}</a>}
-                description={item.subDescription}
-              />
-              <ListContent data={item} />
-            </List.Item>
-          )}
+                title={item.FIELDCODE_VALUE_CN_NAME}
+                description={item.FIELDCODE_VALUE_DESCRIBE}
+              />)}
         />
         <Form.Item
           style={{ marginBottom: 8 }}
@@ -157,7 +75,7 @@ class Step2 extends React.PureComponent {
   }
 }
 
-export default connect(({ form, loading }) => ({
-  submitting: loading.effects['form/submitStepForm'],
-  data: form.step,
-}))(Step2);
+export default connect(({ ele2val, loading }) => ({
+  submitting: loading.effects['ele2val/submitStepForm'],
+  data: ele2val.data,
+}))(Step3);

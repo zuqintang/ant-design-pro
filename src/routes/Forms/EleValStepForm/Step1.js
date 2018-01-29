@@ -298,13 +298,14 @@ export default class ValueMeaningTableList extends PureComponent {
     const { selectedRows, modalVisible, addInputValue } = this.state;
 
     const onValidateForm = () => {
+      const values = { values: selectedRows };
       // validateFields((err, values) => {
       //   if (!err) {
-      //     dispatch({
-      //       type: 'form/saveStepFormData',
-      //       payload: values,
-      //     });
-      dispatch(routerRedux.push('/form/ele-val-step-form/element'));
+      dispatch({
+        type: 'ele2val/saveStepFormData',
+        payload: values,
+      });
+      dispatch(routerRedux.push('/form/ele2val-step-form/element'));
       //   }
       // });
     };

@@ -5,29 +5,21 @@ import { routerRedux } from 'dva/router';
 import Result from '../../../components/Result';
 import styles from './style.less';
 
-class Step3 extends React.PureComponent {
+class Step4 extends React.PureComponent {
   render() {
     const { dispatch, data } = this.props;
     const onFinish = () => {
-      dispatch(routerRedux.push('/form/ele-val-step-form'));
+      dispatch(routerRedux.push('/form/ele2val-step-form'));
     };
     const information = (
       <div className={styles.information}>
         <Row>
-          <Col span={8} className={styles.label}>数据元：</Col>
-          <Col span={16}>{data.payAccount}</Col>
+          <Col span={8} className={styles.label}>数据元</Col>
+          <Col span={16}>{data.element.METADATA_NAME}</Col>
         </Row>
         <Row>
-          <Col span={8} className={styles.label}>允许值：</Col>
-          <Col span={16}>{data.receiverAccount}</Col>
-        </Row>
-        <Row>
-          <Col span={8} className={styles.label}>唯一标识：</Col>
-          <Col span={16}>{data.receiverName}</Col>
-        </Row>
-        <Row>
-          <Col span={8} className={styles.label}>计算值：</Col>
-          <Col span={16}><span className={styles.money}>{data.amount}</span></Col>
+          <Col span={8} className={styles.label}>允许值个数</Col>
+          <Col span={16}>{data.values.length}</Col>
         </Row>
       </div>
     );
@@ -54,6 +46,6 @@ class Step3 extends React.PureComponent {
   }
 }
 
-export default connect(({ form }) => ({
-  data: form.step,
-}))(Step3);
+export default connect(({ ele2val }) => ({
+  data: ele2val.data,
+}))(Step4);

@@ -2,11 +2,11 @@ import { routerRedux } from 'dva/router';
 import { fakeSubmitForm } from '../services/api';
 
 export default {
-  namespace: 'ele-val',
+  namespace: 'ele2val',
 
   state: {
     data: {
-      val: [],
+      values: [],
       element: [],
     },
   },
@@ -18,7 +18,7 @@ export default {
         type: 'saveStepFormData',
         payload,
       });
-      yield put(routerRedux.push('/form/ele-val-step-form/result'));
+      yield put(routerRedux.push('/form/ele2val-step-form/result'));
     },
   },
 

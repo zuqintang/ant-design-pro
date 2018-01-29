@@ -2,7 +2,7 @@ import { getUrlParams } from './utils';
 
 // mock tableListDataSource
 let tableListDataSource = [];
-for (let i = 0; i < 41246; i += 1) {
+for (let i = 0; i < 41; i += 1) {
   tableListDataSource.push({
     key: i,
     ID: i + 1,

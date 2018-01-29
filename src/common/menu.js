@@ -28,7 +28,7 @@ const menuData = [{
     path: 'step-form',
   }, {
     name: '查值赋元',
-    path: 'ele-val-step-form',
+    path: 'ele2val-step-form',
   }, {
     name: '高级表单',
     authority: 'admin',

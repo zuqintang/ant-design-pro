@@ -567,17 +567,18 @@ export default class ElementTableList extends PureComponent {
     const { selectedRows, modalVisible, addInputValue } = this.state;
 
     const onPrev = () => {
-      dispatch(routerRedux.push('/form/ele-val-step-form'));
+      dispatch(routerRedux.push('/form/ele2val-step-form'));
     };
 
     const onValidateForm = () => {
+      const element = { element: selectedRows[0] };
       // validateFields((err, values) => {
       //   if (!err) {
-      //     dispatch({
-      //       type: 'form/saveStepFormData',
-      //       payload: values,
-      //     });
-      dispatch(routerRedux.push('/form/ele-val-step-form/confirm'));
+      dispatch({
+        type: 'ele2val/saveStepFormData',
+        payload: element,
+      });
+      dispatch(routerRedux.push('/form/ele2val-step-form/confirm'));
       //   }
       // });
     };

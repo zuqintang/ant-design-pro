@@ -91,8 +91,8 @@ export const getRouterData = (app) => {
     '/form/step-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm')),
     },
-    '/form/ele-val-step-form': {
-      component: dynamicWrapper(app, ['ele-val'], () => import('../routes/Forms/EleValStepForm')),
+    '/form/ele2val-step-form': {
+      component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm')),
     },
     '/form/set-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/SetForm')),
@@ -139,17 +139,17 @@ export const getRouterData = (app) => {
     '/form/step-form/result': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step3')),
     },
-    '/form/ele-val-step-form/value': {
-      component: dynamicWrapper(app, ['ele-val'], () => import('../routes/Forms/EleValStepForm/Step1')),
+    '/form/ele2val-step-form/value': {
+      component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm/Step1')),
     },
-    '/form/ele-val-step-form/element': {
-      component: dynamicWrapper(app, ['ele-val'], () => import('../routes/Forms/EleValStepForm/Step2')),
+    '/form/ele2val-step-form/element': {
+      component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm/Step2')),
     },
-    '/form/ele-val-step-form/confirm': {
-      component: dynamicWrapper(app, ['ele-val'], () => import('../routes/Forms/EleValStepForm/Step3')),
+    '/form/ele2val-step-form/confirm': {
+      component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm/Step3')),
     },
-    '/form/ele-val-step-form/result': {
-      component: dynamicWrapper(app, ['ele-val'], () => import('../routes/Forms/EleValStepForm/Step4')),
+    '/form/ele2val-step-form/result': {
+      component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm/Step4')),
     },
     '/form/advanced-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/AdvancedForm')),
