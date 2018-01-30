@@ -55,6 +55,29 @@ export async function addSet(params) {
     },
   });
 }
+export async function queryGroup(params) {
+  return request(`/api/group?${stringify(params)}`);
+}
+
+export async function removeGroup(params) {
+  return request('/api/group', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'delete',
+    },
+  });
+}
+
+export async function addGroup(params) {
+  return request('/api/group', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
 
 export async function queryElement(params) {
   return request(`/api/element?${stringify(params)}`);

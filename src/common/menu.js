@@ -125,7 +125,7 @@ const menuData = [{
   }, {
     name: '数据组表格',
     path: 'group-table-list',
-    authority: 'admin',
+    // authority: 'admin',
   }, {
     name: '数据元表格',
     path: 'element-table-list',

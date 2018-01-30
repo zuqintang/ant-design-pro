@@ -1,6 +1,7 @@
 import mockjs from 'mockjs';
 import { getRule, postRule } from './mock/rule';
 import {getSet,postSet} from "./mock/set"
+import {getGroup,postGroup} from "./mock/group"
 import {getElement,postElement} from "./mock/element"
 import {getValue,postValue} from "./mock/value"
 import { getActivities, getNotice, getFakeList } from './mock/api';
@@ -53,6 +54,7 @@ const proxy = {
   'GET /api/activities': getActivities,
   'GET /api/rule': getRule,
   'GET /api/set': getSet,
+  'GET /api/group': getGroup,
   'GET /api/element': getElement,
   'GET /api/value': getValue,
   'POST /api/rule': {
@@ -72,6 +74,15 @@ const proxy = {
       },
     },
     $body: postSet,
+  },
+  'POST /api/group': {
+    $params: {
+      pageSize: {
+        desc: '分页',
+        exp: 2,
+      },
+    },
+    $body: postGroup,
   },
   'POST /api/element': {
     $params: {

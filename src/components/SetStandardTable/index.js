@@ -42,6 +42,10 @@ class SetStandardTable extends PureComponent {
     const standards = ['国标', '企标'];
     const columns = [
       {
+        title: '数据集ID',
+        dataIndex: 'ID',
+      },
+      {
         title: '数据集名称',
         dataIndex: 'NAME',
       },
@@ -99,7 +103,7 @@ class SetStandardTable extends PureComponent {
         title: '创建日期',
         dataIndex: 'CREATE_DATE',
         sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        render: val => <span>{moment(val).format('YYYY-MM-DD')}</span>,
       },
       {
         title: '操作',

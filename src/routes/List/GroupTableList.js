@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
-import StandardTable from '../../components/StandardTable';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, Cascader, DatePicker, Modal, message } from 'antd';
+import SetStandardTable from '../../components/SetStandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './TableList.less';
@@ -9,7 +9,47 @@ import styles from './TableList.less';
 const FormItem = Form.Item;
 const { Option } = Select;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
-
+const options = [{
+  value: '30',
+  label: '全部医院',
+  children: [{
+    value: '74',
+    label: '中日友好医院',
+    children: [{
+      value: '75',
+      label: '肺栓塞入院记录',
+    }],
+  }, {
+    value: '47',
+    label: '北京妇产医院',
+    children: [{
+      value: '48',
+      label: '宫颈癌',
+    }, { value: '86', label: '309' }],
+  }],
+}, {
+  value: '通用型',
+  label: '通用型',
+  children: [{
+    value: 'nanjing',
+    label: 'Nanjing',
+    children: [{
+      value: 'zhonghuamen',
+      label: 'Zhong Hua Men',
+    }],
+  }],
+}, {
+  value: '专用型',
+  label: '专用型',
+  children: [{
+    value: 'nanjing',
+    label: 'Nanjing',
+    children: [{
+      value: 'zhonghuamen',
+      label: 'Zhong Hua Men',
+    }],
+  }],
+}];
 const CreateForm = Form.create()((props) => {
   const { modalVisible, addInputValue, parent, form } = props;
   const okHandle = () => {
@@ -18,9 +58,12 @@ const CreateForm = Form.create()((props) => {
       parent.handleAdd();
     });
   };
+  function displayRender(label) {
+    return label[label.length - 1];
+  }
   return (
     <Modal
-      title="新建规则"
+      title="新建数据组"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => parent.handleModalVisible()}
@@ -28,21 +71,65 @@ const CreateForm = Form.create()((props) => {
       <FormItem
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 15 }}
-        label="描述"
+        label="标准依据"
       >
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: 'Please input some description...' }],
+        {form.getFieldDecorator('STANDARD', {
+          sets: [{
+            required: true, message: '请选择标准',
+          }],
         })(
-          <Input placeholder="请输入" onChange={parent.handleAddInput} setfieldsvalue={addInputValue} />
+          <Select placeholder="请选择" style={{ width: '100%' }} onChange={parent.handleAddStandard} setfieldsvalue={addInputValue.STANDARD}>
+            <Option value="1">国标</Option>
+            <Option value="2">企标</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="数据集编码"
+      >
+        {form.getFieldDecorator('CODE', {
+          set: [{
+            required: false, message: '',
+          }],
+        })(
+          <Input placeholder="系统生成" onChange={parent.handleAddInput} setfieldsvalue={addInputValue.CODE} />
+        )}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="所属科别"
+      >
+        {form.getFieldDecorator('GROUPID', {
+          sets: [{
+            required: true, message: '请选择科别',
+          }],
+        })(
+          <Cascader options={options} placeholder="请选择" style={{ width: '100%' }} onChange={parent.handleAddGroup} setfieldsvalue={addInputValue.GROUPID} expandTrigger="hover" displayRender={displayRender} />
+        )}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="数据集名称"
+      >
+        {form.getFieldDecorator('NAME', {
+          sets: [{
+            required: true, message: '不能为空',
+          }],
+        })(
+          <Input placeholder="请输入" onChange={parent.handleAddInput} setfieldsvalue={addInputValue.NAME} />
         )}
       </FormItem>
     </Modal>
   );
 });
 
-@connect(({ rule, loading }) => ({
-  rule,
-  loading: loading.models.rule,
+@connect(({ group, loading }) => ({
+  group,
+  loading: loading.models.group,
 }))
 @Form.create()
 export default class GroupTableList extends PureComponent {
@@ -57,7 +144,7 @@ export default class GroupTableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'rule/fetch',
+      type: 'group/fetch',
     });
   }
 
@@ -82,7 +169,7 @@ export default class GroupTableList extends PureComponent {
     }
 
     dispatch({
-      type: 'rule/fetch',
+      type: 'group/fetch',
       payload: params,
     });
   }
@@ -94,7 +181,7 @@ export default class GroupTableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'rule/fetch',
+      type: 'group/fetch',
       payload: {},
     });
   }
@@ -114,9 +201,9 @@ export default class GroupTableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'rule/remove',
+          type: 'group/remove',
           payload: {
-            no: selectedRows.map(row => row.no).join(','),
+            ID: selectedRows.map(row => row.ID).join(','),
           },
           callback: () => {
             this.setState({
@@ -154,7 +241,7 @@ export default class GroupTableList extends PureComponent {
       });
 
       dispatch({
-        type: 'rule/fetch',
+        type: 'group/fetch',
         payload: values,
       });
     });
@@ -168,16 +255,26 @@ export default class GroupTableList extends PureComponent {
 
   handleAddInput = (e) => {
     this.setState({
-      addInputValue: e.target.value,
+      addInputValue: { ...this.state.addInputValue, [e.target.name]: e.target.value },
+    });
+  }
+
+  handleAddGroup = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, GROUPID: value[value.length - 1] },
+    });
+  }
+
+  handleAddStandard = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, STANDARD: value },
     });
   }
 
   handleAdd = () => {
     this.props.dispatch({
-      type: 'rule/add',
-      payload: {
-        description: this.state.addInputValue,
-      },
+      type: 'group/add',
+      payload: this.state.addInputValue,
     });
 
     message.success('添加成功');
@@ -192,19 +289,16 @@ export default class GroupTableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="规则编号">
-              {getFieldDecorator('no')(
+            <FormItem label="数据组名称">
+              {getFieldDecorator('NAME')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
+            <FormItem label="数据组编码">
+              {getFieldDecorator('CODE')(
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
@@ -228,54 +322,48 @@ export default class GroupTableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="规则编号">
-              {getFieldDecorator('no')(
+            <FormItem label="数据组名称">
+              {getFieldDecorator('NAME')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
+            <FormItem label="数据组编码">
+              {getFieldDecorator('CODE')(
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="调用次数">
-              {getFieldDecorator('number')(
-                <InputNumber style={{ width: '100%' }} />
+            <FormItem label="科别">
+              {getFieldDecorator('GROUPID')(
+                <Cascader options={options} placeholder="请选择" />
               )}
             </FormItem>
           </Col>
         </Row>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="更新日期">
-              {getFieldDecorator('date')(
+            <FormItem label="创建日期">
+              {getFieldDecorator('CREATE_DATE')(
                 <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status3')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
+            <FormItem label="创建人">
+              {getFieldDecorator('CREATE_MAN')(
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
             <FormItem label="使用状态">
-              {getFieldDecorator('status4')(
+              {getFieldDecorator('DEL_FLAG')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
+                  <Option value="1">启用</Option>
+                  <Option value="2">停用</Option>
                 </Select>
               )}
             </FormItem>
@@ -299,7 +387,7 @@ export default class GroupTableList extends PureComponent {
   }
 
   render() {
-    const { rule: { data }, loading } = this.props;
+    const { group: { data }, loading } = this.props;
     const { selectedRows, modalVisible, addInputValue } = this.state;
 
     const menu = (
@@ -313,6 +401,8 @@ export default class GroupTableList extends PureComponent {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
       handleAddInput: this.handleAddInput,
+      handleAddGroup: this.handleAddGroup,
+      handleAddStandard: this.handleAddStandard,
     };
 
     return (
@@ -339,7 +429,7 @@ export default class GroupTableList extends PureComponent {
                 )
               }
             </div>
-            <StandardTable
+            <SetStandardTable
               selectedRows={selectedRows}
               loading={loading}
               data={data}

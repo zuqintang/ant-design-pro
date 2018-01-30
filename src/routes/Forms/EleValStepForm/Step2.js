@@ -571,7 +571,7 @@ export default class ElementTableList extends PureComponent {
     };
 
     const onValidateForm = () => {
-      const element = { element: selectedRows[0] };
+      const element = { element: [selectedRows[0]] };
       // validateFields((err, values) => {
       //   if (!err) {
       dispatch({

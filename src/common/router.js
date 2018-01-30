@@ -191,7 +191,7 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['set'], () => import('../routes/List/SetTableList')),
     },
     '/list/group-table-list': {
-      component: dynamicWrapper(app, ['rule'], () => import('../routes/List/GroupTableList')),
+      component: dynamicWrapper(app, ['group'], () => import('../routes/List/GroupTableList')),
     },
     '/list/element-table-list': {
       component: dynamicWrapper(app, ['element'], () => import('../routes/List/ElementTableList')),
