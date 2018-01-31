@@ -67,6 +67,13 @@ const description = (
   </DescriptionList>
 );
 
+const tabList = [{
+  key: 'detail',
+  tab: '详情',
+}, {
+  key: 'rule',
+  tab: '规则',
+}];
 
 const desc1 = (
   <div className={classNames(styles.textSecondary, styles.stepDescription)}>
@@ -194,8 +201,8 @@ const conceptColumns = [{
 }))
 export default class ElementAdvancedProfile extends Component {
   state = {
-    operationkey: 'detailTab',
-    pagetabkey: 'detail',
+    operationkey: 'tab1',
+    stepDirection: 'horizontal',
   }
 
   componentDidMount() {
@@ -203,6 +210,9 @@ export default class ElementAdvancedProfile extends Component {
     dispatch({
       type: 'profile/fetchAdvanced',
     });
+
+    this.setStepDirection();
+    window.addEventListener('resize', this.setStepDirection);
   }
 
   componentWillUnmount() {
@@ -210,9 +220,6 @@ export default class ElementAdvancedProfile extends Component {
     this.setStepDirection.cancel();
   }
 
-  onOperationPageTabChange = (key) => {
-    this.setState({ pagetabkey: key });
-  }
   onOperationTabChange = (key) => {
     this.setState({ operationkey: key });
   }
@@ -234,6 +241,7 @@ export default class ElementAdvancedProfile extends Component {
   }
 
   render() {
+    const { stepDirection } = this.state;
     const { profile, loading } = this.props;
     const { advancedOperation1, advancedOperation2, advancedOperation3 } = profile;
     const contentList = {
@@ -256,141 +264,66 @@ export default class ElementAdvancedProfile extends Component {
         columns={conceptColumns}
       />,
     };
-    const contentPageList = {
-      timeline:
-  <Card style={{ marginBottom: 24 }} bordered={false}>
-    <Steps direction="vertical" progressDot={customDot} current={10000}>
-      <Step title="新增" description={desc1} />
-      <Step title="修改值域" description={desc2} />
-      <Step title="审核" />
-      <Step title="应用于表单340" />
-      <Step title="新增" description={desc1} />
-      <Step title="修改值域" description={desc2} />
-      <Step title="审核" />
-      <Step title="应用于表单340" />
-      <Step title="新增" description={desc1} />
-      <Step title="修改值域" description={desc2} />
-      <Step title="审核" />
-      <Step title="应用于表单340" />
-    </Steps>
-  </Card>,
-      detail:
-  <Card bordered={false}>
-    <DescriptionList style={{ marginBottom: 24 }} title="标识类属性">
-      <Description term="名称">患者 药品治疗时间4 时长</Description>
-      <Description term="标识符">JH12.1231.12.12</Description>
-      <Description term="注册机构">******</Description>
-      <Description term="相关环境">******</Description>
-      <Description term="版本">1.0</Description>
-      <Description term="同义名称">患者药品治疗时长</Description>
-    </DescriptionList>
-    <Divider style={{ margin: '16px 0' }} />
-    <DescriptionList style={{ marginBottom: 24 }} title="定义类属性">
-      <Description term="定义">这是很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的内容</Description>
-    </DescriptionList>
-    <Divider style={{ margin: '16px 0' }} />
-    <DescriptionList style={{ marginBottom: 24 }} title="关系类属性">
-      <Description term="分类模式">*******</Description>
-      <Description term="关键字">*******</Description>
-      <Description term="相关数据参照">*******</Description>
-      <Description term="关系类型">*******</Description>
-    </DescriptionList>
-    <Divider style={{ margin: '16px 0' }} />
-    <DescriptionList style={{ marginBottom: 24 }} title="表示类属性">
-      <Description term="表示类别">*******</Description>
-      <Description term="表示形式">*******</Description>
-      <Description term="数据元值的数据类型">*******</Description>
-      <Description term="数据元值的最大长度">*******</Description>
-      <Description term="数据元值的最小长度">*******</Description>
-      <Description term="表示格式">*******</Description>
-      <Description term="数据元允许值">*******</Description>
-    </DescriptionList>
-    <Divider style={{ margin: '16px 0' }} />
-    <DescriptionList style={{ marginBottom: 24 }} title="管理类属性">
-      <Description term="主管机构">*******</Description>
-      <Description term="注册状态">*******</Description>
-      <Description term="提交机构">*******</Description>
-      <Description term="备注">*******</Description>
-    </DescriptionList>
-    <Divider style={{ margin: '16px 0' }} />
-    <DescriptionList style={{ marginBottom: 24 }} title="附加类属性">
-      <Description term="附加属性1">*******</Description>
-      <Description term="附加属性2">*******</Description>
-      <Description term="附加属性3">*******</Description>
-      <Description term="附加属性4">*******</Description>
-    </DescriptionList>
-    <Divider style={{ margin: '16px 0' }} />
-    <DescriptionList style={{ marginBottom: 24 }}>
-      <Description term="数据元名称">患者 药品治疗时间4 时长</Description>
-      <Description term="数据元编码">JH12.1231.12.12</Description>
-      <Description term="数据元别名">患者药品治疗时间</Description>
-      <Description term="数据元定义同义数据元数据"><a href="#">JH12.1231.12.12</a><br /><a>JH12.1231.12.12</a></Description>
-      <Description term="类型">123afal</Description>
-      <Description term="表示格式">725</Description>
-      <Description term="允许值">1,2,3,4,5</Description>
-      <Description term="值域">JV112134</Description>
-      <Description term="所属数据组">DS191.12</Description>
-      <Description term="所属数据集">DS191.12.121</Description>
-      <Description term="创建时间">2017-01-12 12:50:00</Description>
-      <Description term="创建人">2017-01-12 12:50:00</Description>
-      <Description term="来源">EPM导入</Description>
-      <Description term="标准">国标</Description>
-      <Description term="相关数据元"><a href="#">JH12.1231.12.12</a><br /><a>JH12.1231.12.12</a></Description>
-      <Description term="对象类">*****</Description>
-      <Description term="特性">******</Description>
-      <Description term="特性单位">******</Description>
-      <Description term="表示">*******</Description>
-      <Description term="数据元定义">这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...</Description>
-    </DescriptionList>
-    <Divider style={{ margin: '16px 0' }} />
-    <DescriptionList size="small" title="运用范围" col="1">
-      <Description term="表单名称">
-        <a>忧郁症学记录（QIDS-SR16）</a><br />
-        <a>急性期合并用药/治疗</a>
-      </Description>
-    </DescriptionList>
-  </Card>,
-      remark:
-  <Card style={{ marginBottom: 24 }} bordered={false}>
-    <div className={styles.noData}>
-      <Icon type="frown-o" />暂无数据
-    </div>
-  </Card>,
-      refer:
-  <Card
-    className={styles.tabsCard}
-    bordered={false}
-    tabList={operationTabList}
-    onTabChange={this.onOperationTabChange}
-  >
-    {contentList[this.state.operationkey]}
-  </Card>,
-    };
-    const tabList = [{
-      key: 'detail',
-      tab: '摘要',
-    }, {
-      key: 'timeline',
-      tab: '时间轴',
-    }, {
-      key: 'remark',
-      tab: '备忘',
-    }, {
-      key: 'refer',
-      tab: '具体运用',
-    }];
 
     return (
       <PageHeaderLayout
-        title="数据元编号：DE01.00.003.00.02"
+        title="数据组编号：DS23123"
         logo={<img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" />}
         action={action}
         content={description}
         extraContent={extra}
         tabList={tabList}
-        onTabChange={this.onOperationPageTabChange}
       >
-        {contentPageList[this.state.pagetabkey]}
+        <Card title="时间轴" style={{ marginBottom: 24 }} bordered={false}>
+          <Steps direction={stepDirection} progressDot={customDot} current={3}>
+            <Step title="新增" description={desc1} />
+            <Step title="添加数据元" description={desc2} />
+            <Step title="审核" />
+            <Step title="应用于表单340" />
+          </Steps>
+        </Card>
+        <Card title="基本信息" style={{ marginBottom: 24 }} bordered={false}>
+          <DescriptionList style={{ marginBottom: 24 }}>
+            <Description term="数据组名称">患者 药品治疗时间4 时长</Description>
+            <Description term="数据组编码">JH12.1231.12.12</Description>
+            <Description term="数据组所属数据集">患者药品治疗时间</Description>
+            <Description term="对照的数据元"><a href="#">JH12.1231.12.12</a><br /><a>JH12.1231.12.12</a></Description>
+          </DescriptionList>
+          <DescriptionList style={{ marginBottom: 24 }} title="其他">
+            <Description term="创建人">2017-01-12 12:50:00</Description>
+            <Description term="创建日期">2017-01-12 12:50:00</Description>
+            <Description term="修改人">2017-01-12 12:50:00</Description>
+            <Description term="最后修改日期">2017-01-12 12:50:00</Description>
+            <Description term="来源">EPM导入</Description>
+            <Description term="该数据更新时间">2017-08-08</Description>
+          </DescriptionList>
+          <Card type="inner" title="更多信息">
+            <DescriptionList size="small" style={{ marginBottom: 16 }} title="运用范围" col="1">
+              <Description term="表单名称">
+                <a>忧郁症学记录（QIDS-SR16）</a><br />
+                <a>急性期合并用药/治疗</a>
+              </Description>
+            </DescriptionList>
+            <Divider style={{ margin: '16px 0' }} />
+            <DescriptionList size="small" title="信息管理">
+              <Description term="负责人">付小小</Description>
+              <Description term="角色码">1234568</Description>
+            </DescriptionList>
+          </Card>
+        </Card>
+        <Card title="留言" style={{ marginBottom: 24 }} bordered={false}>
+          <div className={styles.noData}>
+            <Icon type="frown-o" />暂无数据
+          </div>
+        </Card>
+        <Card
+          className={styles.tabsCard}
+          bordered={false}
+          tabList={operationTabList}
+          onTabChange={this.onOperationTabChange}
+        >
+          {contentList[this.state.operationkey]}
+        </Card>
       </PageHeaderLayout>
     );
   }

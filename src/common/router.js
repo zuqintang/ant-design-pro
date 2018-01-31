@@ -250,6 +250,12 @@ export const getRouterData = (app) => {
     '/profile/element-advanced': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/Profile/ElementAdvancedProfile')),
     },
+    '/profile/set-advanced': {
+      component: dynamicWrapper(app, ['profile'], () => import('../routes/Profile/SetAdvancedProfile')),
+    },
+    '/profile/group-advanced': {
+      component: dynamicWrapper(app, ['profile'], () => import('../routes/Profile/GroupAdvancedProfile')),
+    },
     '/profile/value-advanced': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/Profile/ValueAdvancedProfile')),
     },

@@ -182,9 +182,15 @@ const menuData = [{
     name: '数据元详情页',
     path: 'element-advanced',
   }, {
+    name: '数据集详情页',
+    path: 'set-advanced',
+  }, {
+    name: '数据组详情页',
+    path: 'group-advanced',
+  }, {
     name: '值含义详情页',
     path: 'value-advanced',
-    authority: 'admin',
+    hideInMenu: true,
   }],
 }, {
   name: '结果页',

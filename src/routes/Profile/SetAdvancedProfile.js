@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Debounce from 'lodash-decorators/debounce';
 import Bind from 'lodash-decorators/bind';
 import { connect } from 'dva';
-import { Button, Menu, Dropdown, Icon, Row, Col, Card, Badge, Table, Divider, Tag, Steps, Popover, Tooltip } from 'antd';
+import { Button, Menu, Dropdown, Icon, Row, Col, Card, Badge, Table, Divider, Tag, Steps, Popover } from 'antd';
 import classNames from 'classnames';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import DescriptionList from '../../components/DescriptionList';
@@ -16,8 +16,7 @@ const getWindowWidth = () => (window.innerWidth || document.documentElement.clie
 
 const menu = (
   <Menu>
-    <Menu.Item key="1">关联数据元概念</Menu.Item>
-    <Menu.Item key="2">提升为数据元概念</Menu.Item>
+    <Menu.Item key="1">添加数据元</Menu.Item>
     <Menu.Item key="3">留言</Menu.Item>
   </Menu>
 );
@@ -26,7 +25,7 @@ const action = (
   <div>
     <ButtonGroup>
       <Button>修改</Button>
-      <Button>添加值</Button>
+      <Button>添加数据组</Button>
       <Dropdown overlay={menu} placement="bottomRight">
         <Button><Icon type="ellipsis" /></Button>
       </Dropdown>
@@ -55,12 +54,8 @@ const description = (
       <Tag color="red" style={{ marginRight: '0px' }}>北医三院</Tag>
       <Tag color="volcano" style={{ marginRight: '0px' }}>心血管</Tag>
       <Tag color="orange" style={{ marginRight: '0px' }}>民族</Tag>
-      <Tag color="gold" style={{ marginRight: '0px' }}>未审核</Tag>
-      <Tag color="lime" style={{ marginRight: '0px' }}>有值域</Tag>
-      <Tag color="green" style={{ marginRight: '0px' }}>已被使用</Tag>
     </div>
     <Description term="创建人">张三</Description>
-    <Description term="所属数据集">DS12.12.121</Description>
     <Description term="创建时间">2017-07-07</Description>
     <Description term="科别">北医三院</Description>
     <Description term="备注">啊啊啊</Description>
@@ -70,7 +65,6 @@ const description = (
 const tabList = [{
   key: 'detail',
   tab: '详情',
-  component: '',
 }, {
   key: 'rule',
   tab: '规则',
@@ -200,7 +194,7 @@ const conceptColumns = [{
   profile,
   loading: loading.effects['profile/fetchAdvanced'],
 }))
-export default class ElementAdvancedProfile extends Component {
+export default class SetAdvancedProfile extends Component {
   state = {
     operationkey: 'tab1',
     stepDirection: 'horizontal',
@@ -268,66 +262,39 @@ export default class ElementAdvancedProfile extends Component {
 
     return (
       <PageHeaderLayout
-        title="值定义编号：DE01.00.003.00.02"
+        title="数据集编号：DS12231"
         logo={<img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" />}
         action={action}
         content={description}
         extraContent={extra}
         tabList={tabList}
       >
-        <Card title="数据元历史" style={{ marginBottom: 24 }} bordered={false}>
+        <Card title="时间轴" style={{ marginBottom: 24 }} bordered={false}>
           <Steps direction={stepDirection} progressDot={customDot} current={3}>
             <Step title="新增" description={desc1} />
-            <Step title="修改值域" description={desc2} />
+            <Step title="添加数据组DS12231-1" description={desc2} />
             <Step title="审核" />
-            <Step title="应用于表单340" />
+            <Step title="添加数据元" />
           </Steps>
         </Card>
         <Card title="基本信息" style={{ marginBottom: 24 }} bordered={false}>
           <DescriptionList style={{ marginBottom: 24 }}>
-            <Description term="数据元名称">患者 药品治疗时间4 时长</Description>
-            <Description term="数据元编码">JH12.1231.12.12</Description>
-            <Description term="数据元别名">患者药品治疗时间</Description>
-            <Description term="数据元定义同义数据元数据"><a href="#">JH12.1231.12.12</a><br /><a>JH12.1231.12.12</a></Description>
-            <Description term="类型">123afal</Description>
+            <Description term="数据集名称">患者基本信息</Description>
+            <Description term="数据集所属科别">通用-人口信息学</Description>
+            <Description term="对照的数据组"><a href="#">DS1231</a><br /><a>DS1231</a></Description>
+            <Description term="对照的数据元"><a href="#">JH12.1231.12.12</a><br /><a>JH12.1231.12.12</a></Description>
           </DescriptionList>
           <DescriptionList style={{ marginBottom: 24 }} title="其他">
-            <Description term="表示格式">725</Description>
-            <Description term="允许值">1,2,3,4,5</Description>
-            <Description term="值域">JV112134</Description>
-            <Description term="所属数据组">DS191.12</Description>
-            <Description term="所属数据集">DS191.12.121</Description>
-            <Description term="创建时间">2017-01-12 12:50:00</Description>
-            <Description term="创建人">2017-01-12 12:50:00</Description>
-            <Description term="来源">EPM导入</Description>
+            <Description term="创建人">张三</Description>
+            <Description term="创建日期">2017-09-10</Description>
+            <Description term="修改人">张三</Description>
+            <Description term="最后修改日期">2017-09-10</Description>
             <Description term="标准">国标</Description>
-            <Description term="相关数据元"><a href="#">JH12.1231.12.12</a><br /><a>JH12.1231.12.12</a></Description>
-            <Description term={
-              <span>
-                某某数据
-                <Tooltip title="数据说明">
-                  <Icon
-                    style={{ color: 'rgba(0, 0, 0, 0.43)', marginLeft: 4 }}
-                    type="info-circle-o"
-                  />
-                </Tooltip>
-              </span>
-              }
-            >
-              725
-            </Description>
+            <Description term="来源">EPM导入</Description>
             <Description term="该数据更新时间">2017-08-08</Description>
           </DescriptionList>
           <h4 style={{ marginBottom: 16 }}>更多信息</h4>
           <Card type="inner" title="">
-            <DescriptionList size="small" style={{ marginBottom: 16 }} title="三大特性">
-              <Description term="对象类">*****</Description>
-              <Description term="特性">******</Description>
-              <Description term="特性单位">******</Description>
-              <Description term="表示">*******</Description>
-              <Description term="数据元定义">这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...</Description>
-            </DescriptionList>
-            <Divider style={{ margin: '16px 0' }} />
             <DescriptionList size="small" style={{ marginBottom: 16 }} title="运用范围" col="1">
               <Description term="表单名称">
                 <a>忧郁症学记录（QIDS-SR16）</a><br />

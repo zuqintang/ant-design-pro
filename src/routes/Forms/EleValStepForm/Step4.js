@@ -15,7 +15,7 @@ class Step4 extends React.PureComponent {
       <div className={styles.information}>
         <Row>
           <Col span={8} className={styles.label}>数据元</Col>
-          <Col span={16}>{data.element.METADATA_NAME}</Col>
+          <Col span={16}>{data.element[0].METADATA_NAME}</Col>
         </Row>
         <Row>
           <Col span={8} className={styles.label}>允许值个数</Col>
