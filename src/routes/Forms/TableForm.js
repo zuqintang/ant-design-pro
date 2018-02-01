@@ -1,6 +1,4 @@
 import React, { PureComponent } from 'react';
-import Debounce from 'lodash-decorators/debounce';
-import Bind from 'lodash-decorators/bind';
 import { Table, Button, Input, message, Popconfirm, Divider } from 'antd';
 import styles from './style.less';
 
@@ -10,6 +8,7 @@ export default class TableForm extends PureComponent {
 
     this.state = {
       data: props.value,
+      loading: false,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -24,20 +23,7 @@ export default class TableForm extends PureComponent {
   }
   index = 0;
   cacheOriginData = {};
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        this.props.dispatch({
-          type: 'form/submit',
-          payload: values,
-        });
-      }
-    });
-  }
-  @Bind()
-  @Debounce(400)
-  toggleEditable(e, key) {
+  toggleEditable=(e, key) => {
     e.preventDefault();
     const newData = this.state.data.map(item => ({ ...item }));
     const target = this.getRowByKey(key, newData);
@@ -83,6 +69,9 @@ export default class TableForm extends PureComponent {
   }
   saveRow(e, key) {
     e.persist();
+    this.setState({
+      loading: true,
+    });
     // save field when blur input
     setTimeout(() => {
       if (document.activeElement.tagName === 'INPUT' &&
@@ -97,12 +86,18 @@ export default class TableForm extends PureComponent {
       if (!target.workId || !target.name || !target.department) {
         message.error('请填写完整成员信息。');
         e.target.focus();
+        this.setState({
+          loading: false,
+        });
         return;
       }
       delete target.isNew;
       this.toggleEditable(e, key);
       this.props.onChange(this.state.data);
-    }, 10);
+      this.setState({
+        loading: false,
+      });
+    }, 500);
   }
   cancel(e, key) {
     this.clickedCancel = true;
@@ -179,6 +174,9 @@ export default class TableForm extends PureComponent {
       title: '操作',
       key: 'action',
       render: (text, record) => {
+        if (!!record.editable && this.state.loading) {
+          return null;
+        }
         if (record.editable) {
           if (record.isNew) {
             return (
@@ -214,6 +212,7 @@ export default class TableForm extends PureComponent {
     return (
       <div>
         <Table
+          loading={this.state.loading}
           columns={columns}
           dataSource={this.state.data}
           pagination={false}
