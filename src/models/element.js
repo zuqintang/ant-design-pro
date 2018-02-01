@@ -7,6 +7,7 @@ export default {
     data: {
       list: [],
       pagination: {},
+      key: 0,
     },
   },
 
@@ -41,6 +42,15 @@ export default {
       return {
         ...state,
         data: action.payload,
+      };
+    },
+    changeitem(state, { payload }) {
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ...payload,
+        },
       };
     },
   },

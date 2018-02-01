@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Radio } from 'antd';
 import ElementStandardTable from '../../components/ElementStandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -275,6 +276,17 @@ export default class ElementTableList extends PureComponent {
       type: 'element/fetch',
     });
   }
+
+  handleClickItemChange =(index) => {
+    this.props.dispatch({
+      type: 'element/changeitem',
+      payload: { key: index },
+    });
+    this.props.dispatch(routerRedux.push('/form/element-form'));
+  };
+  handleClickItemDetail =() => {
+    this.props.dispatch(routerRedux.push('/profile/element-advanced'));
+  };
 
   handleStandardTableChange = (pagination, filtersArg, sorter) => {
     const { dispatch } = this.props;
@@ -619,6 +631,8 @@ export default class ElementTableList extends PureComponent {
               data={data}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
+              handleClickItemChange={this.handleClickItemChange}
+              handleClickItemDetail={this.handleClickItemDetail}
             />
           </div>
         </Card>

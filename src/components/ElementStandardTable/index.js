@@ -37,7 +37,17 @@ class ElementStandardTable extends PureComponent {
   render() {
     const { selectedRowKeys } = this.state;
     const { data: { list, pagination }, loading } = this.props;
-
+    const onClickItemChange = (e) => {
+      if (this.props.handleClickItemChange) {
+        console.log(e.target.getAttribute('index'));
+        this.props.handleClickItemChange(e.target.getAttribute('index'));
+      }
+    };
+    const onClickItemDetail = () => {
+      if (this.props.handleClickItemDetail) {
+        this.props.handleClickItemDetail();
+      }
+    };
     const status = ['未审核', '已审核'];
     const standards = ['国标', '企标'];
     const groups = ['安贞医院', '北大三院'];
@@ -114,11 +124,11 @@ class ElementStandardTable extends PureComponent {
       },
       {
         title: '操作',
-        render: () => (
+        render: (value, record) => (
           <Fragment>
-            <a href="">修改</a>
+            <a onClick={onClickItemChange} index={record.key}>修改</a>
             <Divider type="vertical" />
-            <a href="">详情</a>
+            <a onClick={onClickItemDetail}>详情</a>
           </Fragment>
         ),
       },

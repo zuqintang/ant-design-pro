@@ -1,19 +1,22 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import {
-  Form, Input, Button, Card, Radio, Select } from 'antd';
+  Form, Input, Button, Card, Radio, Select, Row, Col, Divider } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import * as cde from '../../utils/cde';
 
 
 const FormItem = Form.Item;
 const { Option } = Select;
 const { TextArea } = Input;
 
-@connect(({ loading }) => ({
+@connect(({ element, loading }) => ({
+  element,
   submitting: loading.effects['form/submitRegularForm'],
 }))
 @Form.create()
 export default class ElementConceptForm extends PureComponent {
+  state={ row: {} }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -25,26 +28,33 @@ export default class ElementConceptForm extends PureComponent {
       }
     });
   }
+  handleAddID = (value) => {
+    this.setState({
+      row: { ...this.state.row, ID: value },
+    });
+  }
   render() {
-    const { submitting } = this.props;
+    const { element: { data }, submitting } = this.props;
     const { getFieldDecorator } = this.props.form;
+    let row = { STANDARD: '' };
+    if (data.key && data.list && data.key < data.list.length) { row = data.list[data.key]; }
 
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 7 },
+        sm: { span: 6 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 12 },
-        md: { span: 10 },
+        sm: { span: 18 },
+        md: { span: 18 },
       },
     };
 
     const submitFormLayout = {
       wrapperCol: {
         xs: { span: 24, offset: 0 },
-        sm: { span: 10, offset: 7 },
+        sm: { span: 12, offset: 12 },
       },
     };
 
@@ -53,55 +63,77 @@ export default class ElementConceptForm extends PureComponent {
         <Card bordered={false}>
           <Form
             onSubmit={this.handleSubmit}
-            hideRequiredMark
-            style={{ marginTop: 8 }}
+            layout="horizontal"
           >
-            <FormItem
-              {...formItemLayout}
-              label="标准"
-            >
-              {getFieldDecorator('STANDARD', {
+            <FormItem {...submitFormLayout} style={{ textAlign: 'right', marginBottom: 0 }}>
+              <Button type="primary" htmlType="submit" loading={submitting}>
+                提交
+              </Button>
+              <Button style={{ marginLeft: 8 }}>返回</Button>
+            </FormItem>
+            <Divider style={{ marginTop: 0, color: '#000' }} />
+            <Row gutter={24}>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="标准"
+                >
+                  {getFieldDecorator('row.STANDARD', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
+                initialValue: cde.getStandardName(row.STANDARD),
               })(
                 <Select
                   placeholder="请选择"
+                  setfieldsvalue={row.STANDARD}
                 >
-                  <Option value="1">国标</Option>
-                  <Option value="2">企标</Option>
+                  <Option value="0">国标</Option>
+                  <Option value="1">企标</Option>
                 </Select>
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="标识码"
-            >
-              {getFieldDecorator('ID', {
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="标识码"
+                >
+                  {getFieldDecorator('METADATA_IDENTIFY', {
                 rules: [{
                   required: false, message: '不能为空',
                 }],
+                initialValue: row.METADATA_IDENTIFY,
               })(
-                <Input placeholder="系统生成" />
+                <Input placeholder="系统生成" onChange={this.handleAddID} setfieldsvalue={row.METADATA_IDENTIFY} />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="名称"
-            >
-              {getFieldDecorator('DE_NAME', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="名称"
+                >
+                  {getFieldDecorator('METADATA_NAME', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
+                initialValue: row.METADATA_NAME,
               })(
-                <Input placeholder="系统生成" />
+                <Input placeholder="系统生成" setfieldsvalue={row.METADATA_NAME} />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="对象类"
-            >
-              {getFieldDecorator('OBJECT_NAME', {
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="对象类"
+                >
+                  {getFieldDecorator('OBJECT_NAME', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
@@ -114,12 +146,15 @@ export default class ElementConceptForm extends PureComponent {
                   <Option value="3">3</Option>
                 </Select>
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="特性"
-            >
-              {getFieldDecorator('PROPERTY_NAME', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+
+                <FormItem
+                  {...formItemLayout}
+                  label="特性"
+                >
+                  {getFieldDecorator('PROPERTY_NAME', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
@@ -132,12 +167,14 @@ export default class ElementConceptForm extends PureComponent {
                   <Option value="3">3</Option>
                 </Select>
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="表示"
-            >
-              {getFieldDecorator('REPRESENT_NAME', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="表示"
+                >
+                  {getFieldDecorator('REPRESENT_NAME', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
@@ -150,12 +187,16 @@ export default class ElementConceptForm extends PureComponent {
                   <Option value="3">3</Option>
                 </Select>
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="类别"
-            >
-              {getFieldDecorator('GROUP', {
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="类别"
+                >
+                  {getFieldDecorator('GROUP', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
@@ -167,36 +208,45 @@ export default class ElementConceptForm extends PureComponent {
                   <Option value="2">企标</Option>
                 </Select>
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="编号"
-            >
-              {getFieldDecorator('DE_CODE', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="编号"
+                >
+                  {getFieldDecorator('DE_CODE', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
               })(
                 <Input placeholder="系统生成" />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="定义描述"
-            >
-              {getFieldDecorator('DEC_DESCRIPTION', {
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={24}>
+                <FormItem
+                  label="定义描述"
+                >
+                  {getFieldDecorator('DEC_DESCRIPTION', {
                 rules: [{
                   required: true, message: '请输入',
                 }],
               })(
                 <TextArea style={{ minHeight: 32 }} placeholder="请输入" rows={4} />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="数据类型"
-            >
-              {getFieldDecorator('DATA_TYPE', {
+                </FormItem>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="数据类型"
+                >
+                  {getFieldDecorator('DATA_TYPE', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
@@ -208,12 +258,14 @@ export default class ElementConceptForm extends PureComponent {
                   <Option value="2">S</Option>
                 </Select>
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="表示格式"
-            >
-              {getFieldDecorator('DISPLAY_TYPE', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="表示格式"
+                >
+                  {getFieldDecorator('DISPLAY_TYPE', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
@@ -225,84 +277,97 @@ export default class ElementConceptForm extends PureComponent {
                   <Option value="2">AN2000</Option>
                 </Select>
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="别名（可选）"
-            >
-              {getFieldDecorator('OTHER_NAME', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="别名"
+                >
+                  {getFieldDecorator('OTHER_NAME', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
               })(
                 <Input placeholder="请输入" />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="英文名（可选）"
-            >
-              {getFieldDecorator('EN_NAME', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="英文名"
+                >
+                  {getFieldDecorator('EN_NAME', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
               })(
                 <Input placeholder="请输入" />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="英文定义描述（可选）"
-            >
-              {getFieldDecorator('EN_DESCRIPTION', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="来源"
+                >
+                  {getFieldDecorator('DEC_FROM', {
+                rules: [{
+                  required: false, message: '不能为空',
+                }],
+              })(
+                <Input placeholder="系统生成" />
+              )}
+                </FormItem>
+              </Col>
+              <Col span={24}>
+                <FormItem
+                  label="英文定义描述"
+                >
+                  {getFieldDecorator('EN_DESCRIPTION', {
                 rules: [{
                   required: true, message: '不能为空',
                 }],
               })(
                 <TextArea style={{ minHeight: 32 }} placeholder="请输入" rows={4} />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="来源"
-            >
-              {getFieldDecorator('DEC_FROM', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="创建人"
+                >
+                  {getFieldDecorator('CREATEMAN', {
                 rules: [{
                   required: false, message: '不能为空',
                 }],
               })(
                 <Input placeholder="系统生成" />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="创建人"
-            >
-              {getFieldDecorator('CREATEMAN', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="创建日期"
+                >
+                  {getFieldDecorator('CREATE_DATE', {
                 rules: [{
                   required: false, message: '不能为空',
                 }],
               })(
                 <Input placeholder="系统生成" />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="创建日期"
-            >
-              {getFieldDecorator('CREATE_DATE', {
-                rules: [{
-                  required: false, message: '不能为空',
-                }],
-              })(
-                <Input placeholder="系统生成" />
-              )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="是否启用"
-            >
-              {getFieldDecorator('DEL_FLAG', {
+                </FormItem>
+              </Col>
+              <Col span={8}>
+                <FormItem
+                  {...formItemLayout}
+                  label="是否启用"
+                >
+                  {getFieldDecorator('DEL_FLAG', {
                 rules: [{
                   required: false, message: '不能为空',
                 }],
@@ -312,13 +377,9 @@ export default class ElementConceptForm extends PureComponent {
                   <Radio value="1">启用</Radio>
                 </Radio.Group>
               )}
-            </FormItem>
-            <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
-              <Button type="primary" htmlType="submit" loading={submitting}>
-                提交
-              </Button>
-              <Button style={{ marginLeft: 8 }}>保存</Button>
-            </FormItem>
+                </FormItem>
+              </Col>
+            </Row>
           </Form>
         </Card>
       </PageHeaderLayout>

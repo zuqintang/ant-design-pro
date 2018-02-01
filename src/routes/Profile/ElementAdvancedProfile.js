@@ -194,7 +194,7 @@ const conceptColumns = [{
 }))
 export default class ElementAdvancedProfile extends Component {
   state = {
-    operationkey: 'detailTab',
+    operationkey: 'tab1',
     pagetabkey: 'detail',
   }
 
