@@ -305,7 +305,7 @@ export default class ValueMeaningTableList extends PureComponent {
         type: 'ele2val/saveStepFormData',
         payload: values,
       });
-      dispatch(routerRedux.push('/form/ele2val-step-form/element'));
+      dispatch(routerRedux.push('/element/ele2val-step-form/element'));
       //   }
       // });
     };

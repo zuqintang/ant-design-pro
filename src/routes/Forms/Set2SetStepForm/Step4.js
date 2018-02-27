@@ -9,7 +9,7 @@ class Step4 extends React.PureComponent {
   render() {
     const { dispatch } = this.props;
     const onFinish = () => {
-      dispatch(routerRedux.push('/form/set2set-step-form'));
+      dispatch(routerRedux.push('/set/set2set-step-form'));
     };
     const information = (
       <div className={styles.information}>

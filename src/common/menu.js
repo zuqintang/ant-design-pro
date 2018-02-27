@@ -7,27 +7,92 @@ const menuData = [{
   children: [{
     name: '分析页',
     path: 'analysis',
+    hideInMenu: true,
   }, {
     name: '监控页',
     path: 'monitor',
+    hideInMenu: true,
   }, {
     name: '工作台',
     path: 'workplace',
-    // hideInMenu: true,
+    hideInMenu: true,
   }],
 }, {
-  name: '表单页',
+  name: '数据集',
   icon: 'form',
-  path: 'form',
+  path: 'set',
   children: [{
-    name: '基础表单',
-    path: 'basic-form',
-    hideInMenu: true,
+    name: '集列表',
+    path: 'set-table-list',
   }, {
-    name: '分步表单',
-    path: 'step-form',
-    hideInMenu: true,
+    name: '集分组',
+    path: 'set2set-step-form',
   }, {
+    name: '集生元',
+    path: 'set2ele-step-form',
+  }],
+}, {
+  name: '数据组',
+  icon: 'form',
+  path: 'group',
+  children: [{
+    name: '组列表',
+    path: 'group-table-list',
+  }],
+}, {
+  name: '数据元',
+  icon: 'form',
+  path: 'element',
+  children: [{
+    name: '元列表',
+    path: 'element-table-list',
+  }, {
+    name: '值列表',
+    path: 'value-meaning-table-list',
+  }, {
+    name: '查值赋元',
+    path: 'ele2val-step-form',
+  }],
+}, {
+  name: '概念归纳',
+  icon: 'form',
+  path: 'concept',
+  children: [{
+    name: '值域与允许值',
+    path: 'value-domain-table-list',
+  }, {
+    name: '概念域与值定义',
+    path: 'concept-table-list',
+  }, {
+    name: '数据元概念',
+    path: 'element-concept-table-list',
+  }],
+}, {
+  name: '基础信息',
+  icon: 'form',
+  path: 'basic',
+  children: [{
+    name: '对象类表格',
+    path: 'object-table-list',
+    authority: 'admin',
+  }, {
+    name: '特性表格',
+    path: 'property-table-list',
+    authority: 'admin',
+  }, {
+    name: '表示类表格',
+    path: 'represent-table-list',
+    authority: 'admin',
+  }, {
+    name: '计量单位表格',
+    path: 'unit-table-list',
+    authority: 'admin',
+  }],
+}, {
+  name: '分步表单',
+  path: 'step-form',
+  hideInMenu: true,
+  children: [{
     name: '查值赋元',
     path: 'ele2val-step-form',
   }, {
@@ -36,61 +101,23 @@ const menuData = [{
   }, {
     name: '集/组生元',
     path: 'set2ele-step-form',
+  }],
+}, {
+  name: '表单页',
+  icon: 'form',
+  path: 'form',
+  hideInMenu: true,
+  children: [{
+
+
   }, {
     name: '高级表单',
     path: 'advanced-form',
     hideInMenu: true,
-  }, {
-    name: '数据集表单',
-    // authority: 'admin',
-    path: 'set-form',
-  }, {
-    name: '数据组表单',
-    // authority: 'admin',
-    path: 'group-form',
-  }, {
-    name: '数据元表单',
-    // authority: 'admin',
-    path: 'element-form',
-  }, {
-    name: '值域表单',
-    // authority: 'admin',
-    path: 'value-domain-form',
-  }, {
-    name: '值域允许值表单',
-    // authority: 'admin',
-    path: 'permissible-option-form',
-  }, {
-    name: '概念域表单',
-    // authority: 'admin',
-    path: 'concept-form',
-  }, {
-    name: '值含义表单',
-    // authority: 'admin',
-    path: 'value-meaning-form',
-  }, {
-    name: '数据元概念表单',
-    // authority: 'admin',
-    path: 'element-concept-form',
-  }, {
-    name: '对象类表单',
-    // authority: 'admin',
-    path: 'object-form',
-  }, {
-    name: '特性表单',
-    // authority: 'admin',
-    path: 'property-form',
-  }, {
-    name: '表示类表单',
-    // authority: 'admin',
-    path: 'represent-form',
-  }, {
-    name: '计量单位表单',
-    // authority: 'admin',
-    path: 'unit-form',
   }],
 }, {
   name: '列表页',
+  hideInMenu: true,
   icon: 'table',
   path: 'list',
   children: [{
@@ -133,14 +160,17 @@ const menuData = [{
     name: '值域表格',
     path: 'value-domain-table-list',
     authority: 'admin',
+    hideInMenu: true,
   }, {
     name: '值域允许值表格',
     path: 'permissible-option-table-list',
     authority: 'admin',
+    hideInMenu: true,
   }, {
     name: '概念域表格',
     path: 'concept-table-list',
     authority: 'admin',
+    hideInMenu: true,
   }, {
     name: '值含义表格',
     path: 'value-meaning-table-list',
@@ -148,6 +178,7 @@ const menuData = [{
     name: '数据元概念表格',
     path: 'element-concept-table-list',
     authority: 'admin',
+    hideInMenu: true,
   }, {
     name: '对象类表格',
     path: 'object-table-list',
@@ -167,6 +198,7 @@ const menuData = [{
   }],
 }, {
   name: '详情页',
+  hideInMenu: true,
   icon: 'profile',
   path: 'profile',
   children: [{

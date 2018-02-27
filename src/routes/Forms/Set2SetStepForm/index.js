@@ -24,13 +24,13 @@ export default class Set2SetStepForm extends PureComponent {
   render() {
     const { match, routerData } = this.props;
     return (
-      <PageHeaderLayout title="数据集分组" content="实际使用中，数据集由多个数据组组成，每一个数据组内数据元会应用于一套表单模版">
+      <PageHeaderLayout title="数据集分组" content="实际使用中，数据集可细分成多个数据组，每一个数据组内数据元会应用于一套表单模版">
         <Card bordered={false}>
           <div>
             <Steps current={this.getCurrentStep()} className={styles.steps}>
-              <Step title="选择待分组数据集" />
-              <Step title="新增数据组" />
-              <Step title="确认添加信息" />
+              <Step title="选择数据集" />
+              <Step title="选择数据组" />
+              <Step title="确认信息" />
               <Step title="完成" />
             </Steps>
             <Switch>
@@ -44,7 +44,7 @@ export default class Set2SetStepForm extends PureComponent {
                   />
                 ))
               }
-              <Redirect exact from="/form/set2set-step-form" to="/form/set2set-step-form/value" />
+              <Redirect exact from="/set/set2set-step-form" to="/set/set2set-step-form/set" />
               <Route render={NotFound} />
             </Switch>
           </div>

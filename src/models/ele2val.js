@@ -18,7 +18,7 @@ export default {
         type: 'saveStepFormData',
         payload,
       });
-      yield put(routerRedux.push('/form/ele2val-step-form/result'));
+      yield put(routerRedux.push('/element/ele2val-step-form/result'));
     },
   },
 

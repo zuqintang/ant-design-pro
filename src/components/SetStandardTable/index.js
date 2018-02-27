@@ -42,20 +42,20 @@ class SetStandardTable extends PureComponent {
     const standards = ['国标', '企标'];
     const columns = [
       {
-        title: '数据集ID',
+        title: 'ID',
         dataIndex: 'ID',
       },
       {
-        title: '数据集名称',
-        dataIndex: 'NAME',
+        title: '名称',
+        dataIndex: 'DS_NAME',
       },
       {
-        title: '数据集编码',
-        dataIndex: 'CODE',
+        title: '编码',
+        dataIndex: 'DS_CODE',
       },
       {
-        title: '数据集所属类别',
-        dataIndex: 'GROUPID',
+        title: '所属类别',
+        dataIndex: 'DIS_GROUP',
         filters: [
           {
             text: groups[0],
@@ -97,11 +97,11 @@ class SetStandardTable extends PureComponent {
       },
       {
         title: '创建人',
-        dataIndex: 'CREATE_MAN',
+        dataIndex: 'CREATOR',
       },
       {
         title: '创建日期',
-        dataIndex: 'CREATE_DATE',
+        dataIndex: 'CREATED_AT',
         sorter: true,
         render: val => <span>{moment(val).format('YYYY-MM-DD')}</span>,
       },

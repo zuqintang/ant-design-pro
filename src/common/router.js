@@ -91,49 +91,49 @@ export const getRouterData = (app) => {
     '/form/step-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm')),
     },
-    '/form/ele2val-step-form': {
+    '/element/ele2val-step-form': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm')),
     },
-    '/form/set2set-step-form': {
+    '/set/set2set-step-form': {
       component: dynamicWrapper(app, ['set2set'], () => import('../routes/Forms/Set2SetStepForm')),
     },
-    '/form/set2ele-step-form': {
+    '/set/set2ele-step-form': {
       component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm')),
     },
-    '/form/set-form': {
+    '/basic-form/set-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/SetForm')),
     },
-    '/form/group-form': {
+    '/basic-form/group-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/GroupForm')),
     },
-    '/form/element-form': {
+    '/basic-form/element-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ElementForm')),
     },
-    '/form/value-domain-form': {
+    '/basic-form/value-domain-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ValueDomainForm')),
     },
-    '/form/permissible-option-form': {
+    '/basic-form/permissible-option-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/PermissibleOptionForm')),
     },
-    '/form/value-meaning-form': {
+    '/basic-form/value-meaning-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ValueMeaningForm')),
     },
-    '/form/concept-form': {
+    '/basic-form/concept-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ConceptForm')),
     },
-    '/form/element-concept-form': {
+    '/basic-form/element-concept-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ElementConceptForm')),
     },
-    '/form/object-form': {
+    '/basic-form/object-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/ObjectForm')),
     },
-    '/form/property-form': {
+    '/basic-form/property-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/PropertyForm')),
     },
-    '/form/represent-form': {
+    '/basic-form/represent-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/RepresentForm')),
     },
-    '/form/unit-form': {
+    '/basic-form/unit-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/UnitForm')),
     },
     '/form/step-form/info': {
@@ -145,40 +145,40 @@ export const getRouterData = (app) => {
     '/form/step-form/result': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step3')),
     },
-    '/form/ele2val-step-form/value': {
+    '/element/ele2val-step-form/value': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm/Step1')),
     },
-    '/form/ele2val-step-form/element': {
+    '/element/ele2val-step-form/element': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm/Step2')),
     },
-    '/form/ele2val-step-form/confirm': {
+    '/element/ele2val-step-form/confirm': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm/Step3')),
     },
-    '/form/ele2val-step-form/result': {
+    '/element/ele2val-step-form/result': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/EleValStepForm/Step4')),
     },
-    '/form/set2set-step-form/value': {
+    '/set/set2set-step-form/set': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/Set2SetStepForm/Step1')),
     },
-    '/form/set2set-step-form/element': {
+    '/set/set2set-step-form/group': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/Set2SetStepForm/Step2')),
     },
-    '/form/set2set-step-form/confirm': {
+    '/set/set2set-step-form/confirm': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/Set2SetStepForm/Step3')),
     },
-    '/form/set2set-step-form/result': {
+    '/set/set2set-step-form/result': {
       component: dynamicWrapper(app, ['ele2val'], () => import('../routes/Forms/Set2SetStepForm/Step4')),
     },
-    '/form/set2ele-step-form/value': {
+    '/set/set2ele-step-form/value': {
       component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm/Step1')),
     },
-    '/form/set2ele-step-form/element': {
+    '/set/set2ele-step-form/element': {
       component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm/Step2')),
     },
-    '/form/set2ele-step-form/confirm': {
+    '/set/set2ele-step-form/confirm': {
       component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm/Step3')),
     },
-    '/form/set2ele-step-form/result': {
+    '/set/set2ele-step-form/result': {
       component: dynamicWrapper(app, ['set2ele'], () => import('../routes/Forms/Set2EleStepForm/Step4')),
     },
     '/form/advanced-form': {
@@ -187,13 +187,13 @@ export const getRouterData = (app) => {
     '/list/table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/TableList')),
     },
-    '/list/set-table-list': {
+    '/set/set-table-list': {
       component: dynamicWrapper(app, ['set'], () => import('../routes/List/SetTableList')),
     },
-    '/list/group-table-list': {
+    '/group/group-table-list': {
       component: dynamicWrapper(app, ['group'], () => import('../routes/List/GroupTableList')),
     },
-    '/list/element-table-list': {
+    '/element/element-table-list': {
       component: dynamicWrapper(app, ['element'], () => import('../routes/List/ElementTableList')),
     },
     '/list/value-domain-table-list': {
@@ -205,22 +205,22 @@ export const getRouterData = (app) => {
     '/list/concept-table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ConceptTableList')),
     },
-    '/list/value-meaning-table-list': {
+    '/element/value-meaning-table-list': {
       component: dynamicWrapper(app, ['value'], () => import('../routes/List/ValueMeaningTableList')),
     },
     '/list/element-concept-table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ElementConceptTableList')),
     },
-    '/list/object-table-list': {
+    '/basic/object-table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/ObjectTableList')),
     },
-    '/list/property-table-list': {
+    '/basic/property-table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/PropertyTableList')),
     },
-    '/list/represent-table-list': {
+    '/basic/represent-table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/RepresentTableList')),
     },
-    '/list/unit-table-list': {
+    '/basic/unit-table-list': {
       component: dynamicWrapper(app, ['rule'], () => import('../routes/List/UnitTableList')),
     },
     '/list/basic-list': {

@@ -1,16 +1,55 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, DatePicker, Modal, message } from 'antd';
-import { routerRedux } from 'dva/router';
-import ValueStandardTable from '../../../components/ValueStandardTable';
-// import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, Cascader, DatePicker, Modal, message } from 'antd';
+import SetStandardTable from '../../../components/SetStandardTable';
+// import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
 
 import styles from './TableList.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
-
+const options = [{
+  value: '30',
+  label: '全部医院',
+  children: [{
+    value: '74',
+    label: '中日友好医院',
+    children: [{
+      value: '75',
+      label: '肺栓塞入院记录',
+    }],
+  }, {
+    value: '47',
+    label: '北京妇产医院',
+    children: [{
+      value: '48',
+      label: '宫颈癌',
+    }, { value: '86', label: '309' }],
+  }],
+}, {
+  value: '通用型',
+  label: '通用型',
+  children: [{
+    value: 'nanjing',
+    label: 'Nanjing',
+    children: [{
+      value: 'zhonghuamen',
+      label: 'Zhong Hua Men',
+    }],
+  }],
+}, {
+  value: '专用型',
+  label: '专用型',
+  children: [{
+    value: 'nanjing',
+    label: 'Nanjing',
+    children: [{
+      value: 'zhonghuamen',
+      label: 'Zhong Hua Men',
+    }],
+  }],
+}];
 const CreateForm = Form.create()((props) => {
   const { modalVisible, addInputValue, parent, form } = props;
   const okHandle = () => {
@@ -19,9 +58,12 @@ const CreateForm = Form.create()((props) => {
       parent.handleAdd();
     });
   };
+  function displayRender(label) {
+    return label[label.length - 1];
+  }
   return (
     <Modal
-      title="新建值含义"
+      title="新建数据集"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => parent.handleModalVisible()}
@@ -29,24 +71,68 @@ const CreateForm = Form.create()((props) => {
       <FormItem
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 15 }}
-        label="描述"
+        label="标准依据"
       >
-        {form.getFieldDecorator('desc', {
-          values: [{ required: true, message: 'Please input some description...' }],
+        {form.getFieldDecorator('STANDARD', {
+          sets: [{
+            required: true, message: '请选择标准',
+          }],
         })(
-          <Input placeholder="请输入" onChange={parent.handleAddInput} setfieldsvalue={addInputValue} />
+          <Select placeholder="请选择" style={{ width: '100%' }} onChange={parent.handleAddStandard} setfieldsvalue={addInputValue.STANDARD}>
+            <Option value="1">国标</Option>
+            <Option value="2">企标</Option>
+          </Select>
+        )}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="数据集编码"
+      >
+        {form.getFieldDecorator('CODE', {
+          set: [{
+            required: false, message: '',
+          }],
+        })(
+          <Input placeholder="系统生成" onChange={parent.handleAddInput} setfieldsvalue={addInputValue.CODE} />
+        )}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="所属科别"
+      >
+        {form.getFieldDecorator('GROUPID', {
+          sets: [{
+            required: true, message: '请选择科别',
+          }],
+        })(
+          <Cascader options={options} placeholder="请选择" style={{ width: '100%' }} onChange={parent.handleAddGroup} setfieldsvalue={addInputValue.GROUPID} expandTrigger="hover" displayRender={displayRender} />
+        )}
+      </FormItem>
+      <FormItem
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 15 }}
+        label="数据集名称"
+      >
+        {form.getFieldDecorator('NAME', {
+          sets: [{
+            required: true, message: '不能为空',
+          }],
+        })(
+          <Input placeholder="请输入" onChange={parent.handleAddInput} setfieldsvalue={addInputValue.NAME} />
         )}
       </FormItem>
     </Modal>
   );
 });
 
-@connect(({ value, loading }) => ({
-  value,
-  loading: loading.models.value,
+@connect(({ set, loading }) => ({
+  set,
+  loading: loading.models.set,
 }))
 @Form.create()
-export default class ValueMeaningTableList extends PureComponent {
+export default class GroupTableList extends PureComponent {
   state = {
     addInputValue: '',
     modalVisible: false,
@@ -58,7 +144,7 @@ export default class ValueMeaningTableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'value/fetch',
+      type: 'set/fetch',
     });
   }
 
@@ -83,7 +169,7 @@ export default class ValueMeaningTableList extends PureComponent {
     }
 
     dispatch({
-      type: 'value/fetch',
+      type: 'set/fetch',
       payload: params,
     });
   }
@@ -95,7 +181,7 @@ export default class ValueMeaningTableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'value/fetch',
+      type: 'set/fetch',
       payload: {},
     });
   }
@@ -115,7 +201,7 @@ export default class ValueMeaningTableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'value/remove',
+          type: 'set/remove',
           payload: {
             no: selectedRows.map(row => row.no).join(','),
           },
@@ -155,7 +241,7 @@ export default class ValueMeaningTableList extends PureComponent {
       });
 
       dispatch({
-        type: 'value/fetch',
+        type: 'set/fetch',
         payload: values,
       });
     });
@@ -169,16 +255,26 @@ export default class ValueMeaningTableList extends PureComponent {
 
   handleAddInput = (e) => {
     this.setState({
-      addInputValue: e.target.value,
+      addInputValue: { ...this.state.addInputValue, [e.target.name]: e.target.value },
+    });
+  }
+
+  handleAddGroup = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, GROUPID: value[value.length - 1] },
+    });
+  }
+
+  handleAddStandard = (value) => {
+    this.setState({
+      addInputValue: { ...this.state.addInputValue, STANDARD: value },
     });
   }
 
   handleAdd = () => {
     this.props.dispatch({
-      type: 'value/add',
-      payload: {
-        description: this.state.addInputValue,
-      },
+      type: 'set/add',
+      payload: this.state.addInputValue,
     });
 
     message.success('添加成功');
@@ -193,15 +289,15 @@ export default class ValueMeaningTableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="标识符">
-              {getFieldDecorator('FIELDCODE_TABLECODE')(
+            <FormItem label="数据集名称">
+              {getFieldDecorator('NAME')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="值含义">
-              {getFieldDecorator('FIELDCODE_VALUE_CN_NAME')(
+            <FormItem label="数据集编码">
+              {getFieldDecorator('CODE')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
@@ -226,42 +322,39 @@ export default class ValueMeaningTableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="标志符">
-              {getFieldDecorator('FIELDCODE_TABLECODE')(
+            <FormItem label="数据集名称">
+              {getFieldDecorator('NAME')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="值含义">
-              {getFieldDecorator('FIELDCODE_VALUE_CN_NAME')(
+            <FormItem label="数据集编码">
+              {getFieldDecorator('CODE')(
                 <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="数据元编号">
-              {getFieldDecorator('METADATA_IDENTIFY')(
-                <Input placeholder="请输入" />
+            <FormItem label="科别">
+              {getFieldDecorator('GROUPID')(
+                <Cascader options={options} placeholder="请选择" />
               )}
             </FormItem>
           </Col>
         </Row>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="更新日期">
-              {getFieldDecorator('UPDATE_DATE')(
+            <FormItem label="创建日期">
+              {getFieldDecorator('CREATE_DATE')(
                 <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
               )}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="更新人">
-              {getFieldDecorator('UPDATE_MAN')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">张三</Option>
-                  <Option value="1">李四</Option>
-                </Select>
+            <FormItem label="创建人">
+              {getFieldDecorator('CREATE_MAN')(
+                <Input placeholder="请输入" />
               )}
             </FormItem>
           </Col>
@@ -269,8 +362,8 @@ export default class ValueMeaningTableList extends PureComponent {
             <FormItem label="使用状态">
               {getFieldDecorator('DEL_FLAG')(
                 <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">未启用</Option>
                   <Option value="1">启用</Option>
+                  <Option value="2">停用</Option>
                 </Select>
               )}
             </FormItem>
@@ -294,26 +387,22 @@ export default class ValueMeaningTableList extends PureComponent {
   }
 
   render() {
-    const { value: { data }, loading, dispatch } = this.props;
+    const { set: { data }, loading } = this.props;
     const { selectedRows, modalVisible, addInputValue } = this.state;
 
-    const onValidateForm = () => {
-      const values = { values: selectedRows };
-      // validateFields((err, values) => {
-      //   if (!err) {
-      dispatch({
-        type: 'ele2val/saveStepFormData',
-        payload: values,
-      });
-      dispatch(routerRedux.push('/form/set2set-step-form/element'));
-      //   }
-      // });
-    };
+    const menu = (
+      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
+        <Menu.Item key="remove">删除</Menu.Item>
+        <Menu.Item key="approval">批量审批</Menu.Item>
+      </Menu>
+    );
 
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
       handleAddInput: this.handleAddInput,
+      handleAddGroup: this.handleAddGroup,
+      handleAddStandard: this.handleAddStandard,
     };
 
     return (
@@ -325,22 +414,22 @@ export default class ValueMeaningTableList extends PureComponent {
             </div>
             <div className={styles.tableListOperator}>
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建值含义
+                新建
               </Button>
               {
                 selectedRows.length > 0 && (
                   <span>
-                    <Button onClick={onValidateForm}>下一步</Button>
-                    {/* <Dropdown overlay={menu}>
+                    <Button>批量操作</Button>
+                    <Dropdown overlay={menu}>
                       <Button>
                         更多操作 <Icon type="down" />
                       </Button>
-                    </Dropdown> */}
+                    </Dropdown>
                   </span>
                 )
               }
             </div>
-            <ValueStandardTable
+            <SetStandardTable
               selectedRows={selectedRows}
               loading={loading}
               data={data}

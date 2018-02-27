@@ -44,7 +44,7 @@ export default class Set2EleStepForm extends PureComponent {
                   />
                 ))
               }
-              <Redirect exact from="/form/set2ele-step-form" to="/form/set2ele-step-form/value" />
+              <Redirect exact from="/set/set2ele-step-form" to="/set/set2ele-step-form/value" />
               <Route render={NotFound} />
             </Switch>
           </div>

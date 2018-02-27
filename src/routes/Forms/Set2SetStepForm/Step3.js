@@ -54,7 +54,7 @@ class Step3 extends React.PureComponent {
     const { form, data, dispatch, submitting } = this.props;
     const { validateFields } = form;
     const onPrev = () => {
-      dispatch(routerRedux.push('/form/set2set-step-form'));
+      dispatch(routerRedux.push('/set/set2set-step-form'));
     };
     const onValidateForm = (e) => {
       e.preventDefault();
