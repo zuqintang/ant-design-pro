@@ -198,7 +198,7 @@ const menuData = [{
   }],
 }, {
   name: '详情页',
-  hideInMenu: true,
+  // hideInMenu: true,
   icon: 'profile',
   path: 'profile',
   children: [{

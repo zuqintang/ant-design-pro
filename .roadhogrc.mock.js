@@ -178,7 +178,8 @@ const proxy = {
   },
 };
 
-// export default noProxy ? {} : delay(proxy, 1000);
-export default {
-  'GET /api/(.*)': 'https://your.server.com/api/',
-};
+export default noProxy ? {} : delay(proxy, 1000);
+// export default {
+//   '/api/(.*)': 'http://127.0.0.1/CAPI/',
+//   'POST /api/(.*)': 'http://127.0.0.1/CAPI/',
+// };

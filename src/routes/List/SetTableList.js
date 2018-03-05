@@ -94,7 +94,7 @@ const CreateForm = Form.create()((props) => {
             required: false, message: '',
           }],
         })(
-          <Input placeholder="系统生成" onChange={parent.handleAddInput} setfieldsvalue={addInputValue.CODE} />
+          <Input placeholder="系统生成" onChange={parent.handleAddInput} setfieldsvalue={addInputValue.CODE} disabled="true" />
         )}
       </FormItem>
       <FormItem
@@ -255,7 +255,7 @@ export default class GroupTableList extends PureComponent {
 
   handleAddInput = (e) => {
     this.setState({
-      addInputValue: { ...this.state.addInputValue, [e.target.name]: e.target.value },
+      addInputValue: { ...this.state.addInputValue, DS_NAME: e.target.value },
     });
   }
 

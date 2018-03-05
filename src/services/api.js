@@ -47,7 +47,7 @@ export async function removeSet(params) {
 }
 
 export async function addSet(params) {
-  return request('/api/set', {
+  return request('/api/set/add', {
     method: 'POST',
     body: {
       ...params,

@@ -8,6 +8,38 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import DescriptionList from '../../components/DescriptionList';
 import styles from './AdvancedProfile.less';
 
+const m = {
+  CREATE_DATE: '2015-12-10 17:05:50',
+  CREATE_MAN: '王亚芬',
+  DATAMETA_FROM: 'EPM',
+  DATA_DISPLAY: '代码',
+  DATA_DISPLAY_ID: 22,
+  DATA_FEATURE_ID: 8714,
+  DATA_FEATURE_NAME: '病因',
+  DATA_META_DATATYPE: 'S3',
+  DATA_META_DISPLAY: 'AN',
+  DATA_META_PREFIX: 'JH',
+  DATA_OBJECT_ID: 3854,
+  DATA_OBJECT_NAME: '脑出血',
+  DEL_FLAG: 0,
+  FIELDCODE_TABLECODE: 'JV000952',
+  ID: 13039,
+  INPUT_CODE: 'NCXBYDM',
+  MAST_FLAG: 0,
+  METADATAFIELD_NAME: '脑出血病因',
+  METADATA_IDENTIFY: 'JH10.00.034.41',
+  METADATA_INNER_IDENTIFY: 'JH10.00.034.41',
+  METADATA_NAME: '脑出血 病因 代码',
+  METAID: 23091,
+  METAITEM: '脑出血 病因 代码',
+  PID: 0,
+  STANDARD: 1,
+  STATUS: 0,
+  VERSION: 1,
+  VERSION_DATE: 1449738350000,
+  WUBI_CODE: 'EBT UL WD',
+};
+
 const { Step } = Steps;
 const { Description } = DescriptionList;
 const ButtonGroup = Button.Group;
@@ -39,11 +71,11 @@ const extra = (
   <Row>
     <Col xs={24} sm={12}>
       <div className={styles.textSecondary}>状态</div>
-      <div className={styles.heading}>待审批</div>
+      <div className={styles.heading}>已审批</div>
     </Col>
     <Col xs={24} sm={12}>
       <div className={styles.textSecondary}>标准</div>
-      <div className={styles.heading}>国标</div>
+      <div className={styles.heading}>企标</div>
     </Col>
   </Row>
 );
@@ -51,19 +83,19 @@ const extra = (
 const description = (
   <DescriptionList className={styles.headerList} size="small" col="2" style={{ position: 'relative', top: '-20px' }}>
     <div style={{ paddingBottom: '12px' }}>
-      <Tag color="magenta" style={{ marginRight: '0px' }}>国标</Tag>
-      <Tag color="red" style={{ marginRight: '0px' }}>北医三院</Tag>
-      <Tag color="volcano" style={{ marginRight: '0px' }}>心血管</Tag>
-      <Tag color="orange" style={{ marginRight: '0px' }}>民族</Tag>
-      <Tag color="gold" style={{ marginRight: '0px' }}>未审核</Tag>
+      <Tag color="magenta" style={{ marginRight: '0px' }}>{m.STANDARD === 0 ? '国标' : '企标'}</Tag>
+      <Tag color="red" style={{ marginRight: '0px' }}>{m.DATA_OBJECT_NAME}</Tag>
+      <Tag color="volcano" style={{ marginRight: '0px' }}>{m.DATA_DISPLAY}</Tag>
+      <Tag color="orange" style={{ marginRight: '0px' }}>{m.DATA_FEATURE_NAME}</Tag>
+      <Tag color="gold" style={{ marginRight: '0px' }}>已审核</Tag>
       <Tag color="lime" style={{ marginRight: '0px' }}>有值域</Tag>
       <Tag color="green" style={{ marginRight: '0px' }}>已被使用</Tag>
     </div>
-    <Description term="创建人">张三</Description>
-    <Description term="所属数据集">DS12.12.121</Description>
-    <Description term="创建时间">2017-07-07</Description>
-    <Description term="科别">北医三院</Description>
-    <Description term="备注">啊啊啊</Description>
+    <Description term="创建人">{m.CREATE_MAN}</Description>
+    {/* <Description term="所属数据集">DS12.12.121</Description> */}
+    <Description term="创建时间">{m.CREATE_DATE}</Description>
+    {/* <Description term="科别">北医三院</Description>
+    <Description term="备注">啊啊啊</Description> */}
   </DescriptionList>
 );
 
@@ -277,76 +309,75 @@ export default class ElementAdvancedProfile extends Component {
       detail:
   <Card bordered={false}>
     <DescriptionList style={{ marginBottom: 24 }} title="标识类属性">
-      <Description term="名称">患者 药品治疗时间4 时长</Description>
-      <Description term="标识符">JH12.1231.12.12</Description>
-      <Description term="注册机构">******</Description>
-      <Description term="相关环境">******</Description>
+      <Description term="名称">{m.METADATA_NAME}</Description>
+      <Description term="标识符">{m.METADATA_IDENTIFY}</Description>
+      <Description term="注册机构" />
+      <Description term="相关环境" />
       <Description term="版本">1.0</Description>
-      <Description term="同义名称">患者药品治疗时长</Description>
+      <Description term="同义名称">{m.METADATA_NAME}</Description>
     </DescriptionList>
     <Divider style={{ margin: '16px 0' }} />
     <DescriptionList style={{ marginBottom: 24 }} title="定义类属性">
-      <Description term="定义">这是很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的内容</Description>
+      <Description term="定义">{m.METADATA_INTRO}</Description>
     </DescriptionList>
     <Divider style={{ margin: '16px 0' }} />
     <DescriptionList style={{ marginBottom: 24 }} title="关系类属性">
-      <Description term="分类模式">*******</Description>
-      <Description term="关键字">*******</Description>
-      <Description term="相关数据参照">*******</Description>
-      <Description term="关系类型">*******</Description>
+      <Description term="分类模式" />
+      <Description term="关键字" />
+      <Description term="相关数据参照" />
+      <Description term="关系类型" />
     </DescriptionList>
     <Divider style={{ margin: '16px 0' }} />
     <DescriptionList style={{ marginBottom: 24 }} title="表示类属性">
-      <Description term="表示类别">*******</Description>
-      <Description term="表示形式">*******</Description>
-      <Description term="数据元值的数据类型">*******</Description>
-      <Description term="数据元值的最大长度">*******</Description>
-      <Description term="数据元值的最小长度">*******</Description>
-      <Description term="表示格式">*******</Description>
-      <Description term="数据元允许值">*******</Description>
+      <Description term="表示类别">{m.DATA_DISPLAY}</Description>
+      <Description term="表示形式">{m.DATA_META_DATATYPE}</Description>
+      <Description term="数据元值的数据类型">{m.DATA_META_DATATYPE}</Description>
+      <Description term="数据元值的最大长度" />
+      <Description term="数据元值的最小长度" />
+      <Description term="表示格式">{m.DATA_META_DISPLAY}</Description>
+      <Description term="数据元允许值" />
     </DescriptionList>
     <Divider style={{ margin: '16px 0' }} />
     <DescriptionList style={{ marginBottom: 24 }} title="管理类属性">
-      <Description term="主管机构">*******</Description>
-      <Description term="注册状态">*******</Description>
-      <Description term="提交机构">*******</Description>
-      <Description term="备注">*******</Description>
+      <Description term="主管机构" />
+      <Description term="注册状态" />
+      <Description term="提交机构" />
+      <Description term="备注" />
     </DescriptionList>
     <Divider style={{ margin: '16px 0' }} />
     <DescriptionList style={{ marginBottom: 24 }} title="附加类属性">
-      <Description term="附加属性1">*******</Description>
-      <Description term="附加属性2">*******</Description>
-      <Description term="附加属性3">*******</Description>
-      <Description term="附加属性4">*******</Description>
+      <Description term="附加属性1" />
+      <Description term="附加属性2" />
+      <Description term="附加属性3" />
+      <Description term="附加属性4" />
     </DescriptionList>
     <Divider style={{ margin: '16px 0' }} />
     <DescriptionList style={{ marginBottom: 24 }}>
-      <Description term="数据元名称">患者 药品治疗时间4 时长</Description>
-      <Description term="数据元编码">JH12.1231.12.12</Description>
-      <Description term="数据元别名">患者药品治疗时间</Description>
-      <Description term="数据元定义同义数据元数据"><a href="#">JH12.1231.12.12</a><br /><a>JH12.1231.12.12</a></Description>
-      <Description term="类型">123afal</Description>
-      <Description term="表示格式">725</Description>
-      <Description term="允许值">1,2,3,4,5</Description>
-      <Description term="值域">JV112134</Description>
-      <Description term="所属数据组">DS191.12</Description>
-      <Description term="所属数据集">DS191.12.121</Description>
-      <Description term="创建时间">2017-01-12 12:50:00</Description>
-      <Description term="创建人">2017-01-12 12:50:00</Description>
+      <Description term="数据元名称">{m.METADATA_NAME}</Description>
+      <Description term="数据元编码">{m.METADATA_IDENTIFY}</Description>
+      <Description term="数据元别名">{m.METADATA_NAME}</Description>
+      <Description term="数据元定义同义数据元数据"><a href="#">{`${m.METADATA_IDENTIFY}01`}</a><br /><a>{`${m.METADATA_IDENTIFY}02`}</a></Description>
+      <Description term="类型">{m.DATA_META_DATATYPE}</Description>
+      <Description term="表示格式">{m.DATA_META_DISPLAY}</Description>
+      <Description term="允许值">...</Description>
+      <Description term="值域">{m.FIELDCODE_TABLECODE}</Description>
+      <Description term="所属数据组">{`DS${m.DATA_OBJECT_ID}`}</Description>
+      <Description term="所属数据集">{`DS${m.DATA_FEATURE_ID}`}</Description>
+      <Description term="创建时间">{m.CREATE_DATE}</Description>
+      <Description term="创建人">{m.CREATE_MAN}</Description>
       <Description term="来源">EPM导入</Description>
-      <Description term="标准">国标</Description>
-      <Description term="相关数据元"><a href="#">JH12.1231.12.12</a><br /><a>JH12.1231.12.12</a></Description>
-      <Description term="对象类">*****</Description>
-      <Description term="特性">******</Description>
-      <Description term="特性单位">******</Description>
-      <Description term="表示">*******</Description>
-      <Description term="数据元定义">这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...</Description>
+      <Description term="标准">企标</Description>
+      <Description term="相关数据元"><a href="#">{`${m.METADATA_IDENTIFY}01`}</a><br /><a>{`${m.METADATA_IDENTIFY}02`}</a></Description>
+      <Description term="对象类">{m.DATA_OBJECT_NAME}</Description>
+      <Description term="特性">{m.DATA_FEATURE_NAME}</Description>
+      <Description term="特性单位" />
+      <Description term="表示">{m.DATA_DISPLAY}</Description>
+      <Description term="数据元定义">{m.METADATA_INTRO}</Description>
     </DescriptionList>
     <Divider style={{ margin: '16px 0' }} />
     <DescriptionList size="small" title="运用范围" col="1">
       <Description term="表单名称">
-        <a>忧郁症学记录（QIDS-SR16）</a><br />
-        <a>急性期合并用药/治疗</a>
+        <a>{`Template${m.VERSION_DATE}`}</a><br />
       </Description>
     </DescriptionList>
   </Card>,
@@ -382,7 +413,7 @@ export default class ElementAdvancedProfile extends Component {
 
     return (
       <PageHeaderLayout
-        title="数据元编号：DE01.00.003.00.02"
+        title={`数据元编号：${m.METADATA_IDENTIFY}`}
         logo={<img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" />}
         action={action}
         content={description}
